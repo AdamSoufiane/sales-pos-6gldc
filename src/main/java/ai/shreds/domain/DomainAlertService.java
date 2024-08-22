@@ -1,6 +1,6 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.SharedAlertDTO;
+import ai.shreds.shared.dto.SharedAlertDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lombok.RequiredArgsConstructor;

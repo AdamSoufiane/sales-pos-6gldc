@@ -1,8 +1,8 @@
 package ai.shreds.shared;
 
-import ai.shreds.domain.SharedProductDomainEntity;
-import ai.shreds.domain.SharedInventoryDomainEntity;
-import ai.shreds.domain.SharedAlertDTO;
+import ai.shreds.shared.SharedProductDomainEntity;
+import ai.shreds.shared.SharedInventoryDomainEntity;
+import ai.shreds.shared.dto.SharedAlertDTO;
 import java.util.UUID;
 import java.math.BigDecimal;
 import java.sql.Timestamp;

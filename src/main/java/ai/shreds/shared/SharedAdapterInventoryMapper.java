@@ -2,8 +2,8 @@ package ai.shreds.shared;
 
 import ai.shreds.adapter.AdapterProductAddedEventDTO;
 import ai.shreds.adapter.AdapterProductUpdatedEventDTO;
-import ai.shreds.adapter.AdapterProductDeletedEventDTO;
-import ai.shreds.adapter.AdapterInventoryUpdateResponseDTO;
+import ai.shreds.shared.dto.SharedAdapterProductDeletedEventDTO;
+import ai.shreds.adapter.dto.AdapterInventoryUpdateResponseDTO;
 import ai.shreds.adapter.AdapterInventoryAlertResponseDTO;
 import ai.shreds.domain.DomainInventoryEntity;
 import ai.shreds.domain.DomainAlertDTO;
@@ -38,7 +38,7 @@ public interface SharedAdapterInventoryMapper {
     DomainProductEntity toDomainProductEntity(AdapterProductUpdatedEventDTO event);
 
     @Mapping(source = "productId", target = "productId")
-    DomainProductEntity toDomainProductEntity(AdapterProductDeletedEventDTO event);
+    DomainProductEntity toDomainProductEntity(SharedAdapterProductDeletedEventDTO event);
 
     @Mapping(source = "productId", target = "productId")
     @Mapping(source = "quantity", target = "quantity")
@@ -77,5 +77,5 @@ public interface SharedAdapterInventoryMapper {
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "qteAlert", target = "qteAlert")
     @Mapping(source = "lastUpdated", target = "lastUpdated")
-    SharedAlertDTO toSharedAlertDTO(DomainInventoryEntity inventory);
+    SharedAlertDTO toSharedAlertDTO(ai.shreds.domain.DomainInventoryEntity inventory);
 }

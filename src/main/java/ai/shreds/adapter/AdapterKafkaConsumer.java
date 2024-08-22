@@ -2,7 +2,7 @@ package ai.shreds.adapter;
 
 import ai.shreds.shared.SharedAdapterProductAddedEventDTO;
 import ai.shreds.shared.SharedAdapterProductUpdatedEventDTO;
-import ai.shreds.shared.SharedAdapterProductDeletedEventDTO;
+import ai.shreds.shared.dto.SharedAdapterProductDeletedEventDTO;
 import ai.shreds.application.ApplicationInventoryServiceInputPort;
 import ai.shreds.shared.SharedAdapterInventoryMapper;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -23,7 +23,7 @@ public class AdapterKafkaConsumer {
         try {
             validateProductAddedEvent(event);
             log.info("Validated ProductAddedEvent for productId: {}", event.getProductId());
-            inventoryService.processProductAddedEvent(inventoryMapper.toDomain(event));
+            inventoryService.processProductAddedEvent(inventoryMapper.toDomainProductEntity(event));
             log.info("Successfully processed ProductAddedEvent for productId: {}", event.getProductId());
         } catch (Exception e) {
             log.error("Error processing ProductAddedEvent: {}", e.getMessage(), e);
@@ -36,7 +36,7 @@ public class AdapterKafkaConsumer {
         try {
             validateProductUpdatedEvent(event);
             log.info("Validated ProductUpdatedEvent for productId: {}", event.getProductId());
-            inventoryService.processProductUpdatedEvent(inventoryMapper.toDomain(event));
+            inventoryService.processProductUpdatedEvent(inventoryMapper.toDomainProductEntity(event));
             log.info("Successfully processed ProductUpdatedEvent for productId: {}", event.getProductId());
         } catch (Exception e) {
             log.error("Error processing ProductUpdatedEvent: {}", e.getMessage(), e);
@@ -49,7 +49,7 @@ public class AdapterKafkaConsumer {
         try {
             validateProductDeletedEvent(event);
             log.info("Validated ProductDeletedEvent for productId: {}", event.getProductId());
-            inventoryService.processProductDeletedEvent(inventoryMapper.toDomain(event));
+            inventoryService.processProductDeletedEvent(inventoryMapper.toDomainProductEntity(event));
             log.info("Successfully processed ProductDeletedEvent for productId: {}", event.getProductId());
         } catch (Exception e) {
             log.error("Error processing ProductDeletedEvent: {}", e.getMessage(), e);

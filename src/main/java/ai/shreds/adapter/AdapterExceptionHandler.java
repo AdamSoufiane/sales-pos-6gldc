@@ -19,10 +19,4 @@ public class AdapterExceptionHandler {
         logger.error("Exception caught: ", exception);
         return new ResponseEntity<>("An error occurred: " + exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    @ExceptionHandler(AdapterKafkaConsumerException.class)
-    public ResponseEntity<String> handleKafkaConsumerException(AdapterKafkaConsumerException exception) {
-        logger.error("Kafka Consumer Exception caught: Topic - {}, Partition - {}", exception.getTopic(), exception.getPartition(), exception);
-        return new ResponseEntity<>("Kafka Consumer Error: " + exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }

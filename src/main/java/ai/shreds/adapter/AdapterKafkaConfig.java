@@ -22,7 +22,7 @@ public class AdapterKafkaConfig {
     private int concurrencyLevel;
 
     @Value("${kafka.ack-mode:MANUAL_IMMEDIATE}")
-    private ContainerProperties.AckMode ackMode;
+    private org.springframework.kafka.listener.config.ContainerProperties.AckMode ackMode;
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {

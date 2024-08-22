@@ -1,11 +1,10 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.SharedAlertDTO;
+import ai.shreds.shared.dto.SharedAlertDTO;
 import ai.shreds.shared.SharedInventoryDomainEntity;
 import ai.shreds.shared.SharedProductDomainEntity;
 import java.time.Instant;
 import java.util.UUID;
-import javax.money.Decimal;
 import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class DomainInventoryMapper {
         inventory.setProductId(product.getProductId());
         inventory.setQuantity(defaultQuantity);
         inventory.setQteAlert(defaultQteAlert);
-        inventory.setLastUpdated(Instant.now());
+        inventory.setLastUpdated(Timestamp.from(Instant.now()));
         return inventory;
     }
 

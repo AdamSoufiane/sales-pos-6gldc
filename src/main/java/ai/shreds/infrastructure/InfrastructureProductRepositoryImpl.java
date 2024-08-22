@@ -1,7 +1,6 @@
 package ai.shreds.infrastructure;
 
 import ai.shreds.shared.SharedProductDomainEntity;
-import ai.shreds.infrastructure.InfrastructureProductRepositoryPort;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

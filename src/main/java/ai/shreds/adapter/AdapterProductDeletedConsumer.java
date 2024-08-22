@@ -1,6 +1,6 @@
 package ai.shreds.adapter;
 
-import ai.shreds.shared.SharedAdapterProductDeletedEventDTO;
+import ai.shreds.shared.dto.SharedAdapterProductDeletedEventDTO;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;

@@ -1,6 +1,6 @@
 package ai.shreds.application;
 
-import ai.shreds.shared.SharedAlertDTO;
+import ai.shreds.shared.dto.SharedAlertDTO;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

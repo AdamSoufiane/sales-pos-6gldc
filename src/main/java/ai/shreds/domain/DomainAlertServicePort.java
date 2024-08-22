@@ -1,6 +1,6 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.SharedAlertDTO;
+import ai.shreds.shared.dto.SharedAlertDTO;
 
 /**
  * Domain port for triggering alerts when inventory levels fall below a specified threshold.
