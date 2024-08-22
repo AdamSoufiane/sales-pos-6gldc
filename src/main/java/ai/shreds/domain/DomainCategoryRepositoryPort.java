@@ -1,7 +1,7 @@
 package ai.shreds.domain;
 
+import java.util.List;
 import java.util.UUID;
-import ai.shreds.domain.exceptions.CategoryNotFoundException;
 
 /**
  * DomainCategoryRepositoryPort is an interface responsible for data access operations related to the Category entity.
@@ -20,15 +20,47 @@ public interface DomainCategoryRepositoryPort {
      *
      * @param id the unique identifier of the category
      * @return the category entity
-     * @throws CategoryNotFoundException if the category is not found
      */
-    DomainCategoryEntity findById(UUID id) throws CategoryNotFoundException;
+    DomainCategoryEntity findById(UUID id);
 
     /**
      * Deletes a category by its ID.
      *
      * @param id the unique identifier of the category
-     * @throws CategoryNotFoundException if the category is not found
      */
-    void deleteById(UUID id) throws CategoryNotFoundException;
+    void deleteById(UUID id);
+
+    /**
+     * Checks if a category with the given name and parent ID exists.
+     *
+     * @param name the name of the category
+     * @param parentId the unique identifier of the parent category
+     * @return true if a category with the given name and parent ID exists, false otherwise
+     */
+    boolean existsByNameAndParentId(String name, UUID parentId);
+
+    /**
+     * Checks if a category has subcategories.
+     *
+     * @param parentId the unique identifier of the parent category
+     * @return true if the category has subcategories, false otherwise
+     */
+    boolean hasSubcategories(UUID parentId);
+
+    /**
+     * Finds a category by its name and parent ID.
+     *
+     * @param name the name of the category
+     * @param parentId the unique identifier of the parent category
+     * @return the category entity
+     */
+    DomainCategoryEntity findByNameAndParentId(String name, UUID parentId);
+
+    /**
+     * Finds subcategories by the parent ID.
+     *
+     * @param parentId the unique identifier of the parent category
+     * @return a list of subcategory entities
+     */
+    List<DomainCategoryEntity> findSubcategoriesByParentId(UUID parentId);
 }

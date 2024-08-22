@@ -1,9 +1,9 @@
 package ai.shreds.adapter;
 
 import ai.shreds.domain.DomainCategoryEntity;
-import ai.shreds.shared.AdapterCategoryCreateRequest;
-import ai.shreds.shared.AdapterCategoryUpdateRequest;
-import ai.shreds.shared.AdapterCategoryResponse;
+import ai.shreds.adapter.AdapterCategoryCreateRequest;
+import ai.shreds.adapter.AdapterCategoryUpdateRequest;
+import ai.shreds.adapter.AdapterCategoryResponse;
 import ai.shreds.shared.SharedUUID;
 import ai.shreds.shared.SharedTimestamp;
 import org.mapstruct.Mapper;

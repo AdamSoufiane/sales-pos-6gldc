@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.util.Properties;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -46,7 +47,7 @@ public class InfrastructureDatabaseConfig {
     @Bean
     public DataSource dataSource() {
         try {
-            org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
+            DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName(databaseDriverClassName);
             dataSource.setUrl(databaseUrl);
             dataSource.setUsername(databaseUsername);

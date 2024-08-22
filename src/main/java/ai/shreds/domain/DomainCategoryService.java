@@ -39,7 +39,7 @@ public class DomainCategoryService implements DomainCategoryServicePort {
 
             if (request.getCategory_id() != null) {
                 SharedUUID parentId = new SharedUUID(request.getCategory_id().toString());
-                checkParentCategoryExists(parentId);
+                checkParentCategoryExists(UUID.fromString(parentId.getValue()));
             }
 
             if (!isCategoryNameUniqueWithinParent(request.getName(), new SharedUUID(request.getCategory_id().toString()))) {
@@ -51,22 +51,21 @@ public class DomainCategoryService implements DomainCategoryServicePort {
         }
     }
 
-    @Override
-    public void checkParentCategoryExists(@NotNull SharedUUID id) {
-        DomainCategoryEntity parentCategory = categoryRepository.findById(id.getValue());
+    public void checkParentCategoryExists(@NotNull UUID id) {
+        DomainCategoryEntity parentCategory = categoryRepository.findById(id);
         if (parentCategory == null) {
             throw new ApplicationCategoryException("Parent category does not exist.");
         }
     }
 
     private boolean isCategoryNameUniqueWithinParent(String name, @NotNull SharedUUID parentId) {
-        return categoryRepository.findByNameAndParentId(name, parentId.getValue()) == null;
+        return !categoryRepository.existsByNameAndParentId(name, UUID.fromString(parentId.getValue()));
     }
 
     @Transactional
     private void validateCategoryDeletion(@NotNull SharedUUID id) {
         try {
-            if (!categoryRepository.findSubcategoriesByParentId(id.getValue()).isEmpty()) {
+            if (categoryRepository.hasSubcategories(UUID.fromString(id.getValue()))) {
                 throw new ApplicationCategoryException("Category cannot be deleted as it has subcategories.");
             }
         } catch (Exception e) {

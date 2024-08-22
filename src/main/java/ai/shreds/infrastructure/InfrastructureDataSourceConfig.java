@@ -49,7 +49,7 @@ public class InfrastructureDataSourceConfig {
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("Data source username must not be null or empty");
         }
-        if (password == null || password isEmpty()) {
+        if (password == null || password.isEmpty()) {
             throw new IllegalArgumentException("Data source password must not be null or empty");
         }
         if (driverClassName == null || driverClassName.isEmpty()) {

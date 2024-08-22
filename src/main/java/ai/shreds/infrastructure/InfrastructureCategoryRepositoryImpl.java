@@ -54,4 +54,33 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
             throw new DomainCategoryException("Error deleting category: a persistence error occurred", e);
         }
     }
+
+    @Override
+    public boolean existsByNameAndParentId(String name, UUID parentId) {
+        try {
+            Long count = entityManager.createQuery(
+                    "SELECT COUNT(c) FROM DomainCategoryEntity c WHERE c.name = :name AND c.categoryId = :parentId",
+                    Long.class)
+                    .setParameter("name", name)
+                    .setParameter("parentId", parentId)
+                    .getSingleResult();
+            return count > 0;
+        } catch (PersistenceException e) {
+            throw new DomainCategoryException("Error checking if category exists by name and parent ID: a persistence error occurred", e);
+        }
+    }
+
+    @Override
+    public boolean hasSubcategories(UUID parentId) {
+        try {
+            Long count = entityManager.createQuery(
+                    "SELECT COUNT(c) FROM DomainCategoryEntity c WHERE c.categoryId = :parentId",
+                    Long.class)
+                    .setParameter("parentId", parentId)
+                    .getSingleResult();
+            return count > 0;
+        } catch (PersistenceException e) {
+            throw new DomainCategoryException("Error checking if category has subcategories: a persistence error occurred", e);
+        }
+    }
 }

@@ -54,6 +54,11 @@ public class AdapterCategoryResponse {
     private LocalDateTime updated_at;
 
     /**
+     * Error message for the response.
+     */
+    private String message;
+
+    /**
      * Formats the created_at timestamp to a standard string representation.
      * @return Formatted created_at timestamp.
      */
@@ -77,5 +82,13 @@ public class AdapterCategoryResponse {
     private String formatTimestamp(LocalDateTime timestamp) {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         return timestamp.format(formatter);
+    }
+
+    /**
+     * Sets the error message for the response.
+     * @param message The error message.
+     */
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

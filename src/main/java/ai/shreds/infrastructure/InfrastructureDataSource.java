@@ -26,7 +26,7 @@ public class InfrastructureDataSource {
             throw new IllegalArgumentException("Database username cannot be null or empty");
         }
 
-        if (password == null || password isEmpty()) {
+        if (password == null || password.isEmpty()) {
             log.error("Database password is null or empty");
             throw new IllegalArgumentException("Database password cannot be null or empty");
         }

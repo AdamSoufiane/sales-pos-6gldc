@@ -3,9 +3,9 @@ package ai.shreds.adapter;
 import ai.shreds.application.ApplicationCreateCategoryInputPort;
 import ai.shreds.application.ApplicationUpdateCategoryInputPort;
 import ai.shreds.application.ApplicationDeleteCategoryInputPort;
-import ai.shreds.shared.AdapterCategoryCreateRequest;
-import ai.shreds.shared.AdapterCategoryUpdateRequest;
-import ai.shreds.shared.AdapterCategoryResponse;
+import ai.shreds.adapter.AdapterCategoryCreateRequest;
+import ai.shreds.adapter.AdapterCategoryUpdateRequest;
+import ai.shreds.adapter.AdapterCategoryResponse;
 import ai.shreds.adapter.AdapterCategoryMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,25 +55,7 @@ public class AdapterCategoryController {
         }
     }
 
-    private ResponseEntity<ErrorResponse> handleException(Exception e) {
-        // Handle exceptions and return appropriate error responses
-        // This is a simplified example, in a real application you might want to have a more sophisticated error handling mechanism
-        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-    }
-
-    private static class ErrorResponse {
-        private String message;
-
-        public ErrorResponse(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
+    private ResponseEntity<Void> handleException(Exception e) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
