@@ -22,7 +22,7 @@ public class AdapterCategoryRequestParams {
     private String name;
 
     /**
-     * ID of the parent category. 
+     * ID of the parent category.
      * Assuming that a 0 value is valid.
      */
     @Min(0)

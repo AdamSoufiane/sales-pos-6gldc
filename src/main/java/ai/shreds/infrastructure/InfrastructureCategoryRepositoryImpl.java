@@ -19,7 +19,7 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
     private EntityManager entityManager;
 
     @Override
-    public List<DomainCategoryEntity> findAll() {
+    public List<DomainCategoryEntity> findAll() throws Exception {
         try {
             String jpql = "SELECT c FROM DomainCategoryEntity c";
             TypedQuery<DomainCategoryEntity> query = entityManager.createQuery(jpql, DomainCategoryEntity.class);
@@ -30,7 +30,7 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
     }
 
     @Override
-    public DomainCategoryEntity findById(Long id) {
+    public DomainCategoryEntity findById(Long id) throws Exception {
         try {
             return entityManager.find(DomainCategoryEntity.class, id);
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
     }
 
     @Override
-    public List<DomainCategoryEntity> findByNameContaining(String name) {
+    public List<DomainCategoryEntity> findByNameContaining(String name) throws Exception {
         try {
             String jpql = "SELECT c FROM DomainCategoryEntity c WHERE c.name LIKE :name";
             TypedQuery<DomainCategoryEntity> query = entityManager.createQuery(jpql, DomainCategoryEntity.class);
@@ -51,9 +51,9 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
     }
 
     @Override
-    public List<DomainCategoryEntity> findByCategoryId(Long categoryId) {
+    public List<DomainCategoryEntity> findByCategoryId(Long categoryId) throws Exception {
         try {
-            String jpql = "SELECT c FROM DomainCategoryEntity c WHERE c.categoryId = :categoryId";
+            String jpql = "SELECT c FROM DomainCategoryEntity c WHERE c.categoryId.id = :categoryId";
             TypedQuery<DomainCategoryEntity> query = entityManager.createQuery(jpql, DomainCategoryEntity.class);
             query.setParameter("categoryId", categoryId);
             return query.getResultList();
@@ -63,7 +63,7 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
     }
 
     @Override
-    public List<DomainCategoryEntity> findByCreatedAtAfter(Timestamp createdAfter) {
+    public List<DomainCategoryEntity> findByCreatedAtAfter(Timestamp createdAfter) throws Exception {
         try {
             String jpql = "SELECT c FROM DomainCategoryEntity c WHERE c.createdAt > :createdAfter";
             TypedQuery<DomainCategoryEntity> query = entityManager.createQuery(jpql, DomainCategoryEntity.class);
@@ -75,7 +75,7 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
     }
 
     @Override
-    public List<DomainCategoryEntity> findByUpdatedAtAfter(Timestamp updatedAfter) {
+    public List<DomainCategoryEntity> findByUpdatedAtAfter(Timestamp updatedAfter) throws Exception {
         try {
             String jpql = "SELECT c FROM DomainCategoryEntity c WHERE c.updatedAt > :updatedAfter";
             TypedQuery<DomainCategoryEntity> query = entityManager.createQuery(jpql, DomainCategoryEntity.class);
@@ -86,8 +86,7 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
         }
     }
 
-    @Override
-    public Page<DomainCategoryEntity> findAll(Pageable pageable) {
+    public Page<DomainCategoryEntity> findAll(Pageable pageable) throws Exception {
         try {
             String jpql = "SELECT c FROM DomainCategoryEntity c";
             TypedQuery<DomainCategoryEntity> query = entityManager.createQuery(jpql, DomainCategoryEntity.class);

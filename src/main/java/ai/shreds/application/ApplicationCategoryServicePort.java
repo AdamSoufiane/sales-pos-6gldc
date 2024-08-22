@@ -1,6 +1,6 @@
 package ai.shreds.application;
 
-import ai.shreds.shared.DomainCategoryEntity;
+import ai.shreds.domain.DomainCategoryEntity;
 import java.util.List;
 import java.util.Map;
 

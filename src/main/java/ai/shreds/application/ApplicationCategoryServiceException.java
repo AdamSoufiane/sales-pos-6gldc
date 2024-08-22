@@ -1,24 +1,23 @@
 package ai.shreds.application;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+public class ApplicationCategoryServiceException extends RuntimeException {
 
-@Component
-public class ApplicationCategoryServiceException {
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationCategoryServiceException.class);
-
-    public void handleException(Exception e) {
-        // Log the exception details with more context
-        logger.error("An error occurred in the ApplicationCategoryService: {}", e.getMessage(), e);
-
-        // Optionally, rethrow the exception or wrap it in a custom exception
-        throw new CustomApplicationException("An error occurred in the category service", e);
+    /**
+     * Constructs a new ApplicationCategoryServiceException with the specified detail message.
+     *
+     * @param message the detail message.
+     */
+    public ApplicationCategoryServiceException(String message) {
+        super(message);
     }
 
-    static class CustomApplicationException extends RuntimeException {
-        public CustomApplicationException(String message, Throwable cause) {
-            super(message, cause);
-        }
+    /**
+     * Constructs a new ApplicationCategoryServiceException with the specified detail message and cause.
+     *
+     * @param message the detail message.
+     * @param cause the cause of the exception.
+     */
+    public ApplicationCategoryServiceException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

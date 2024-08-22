@@ -1,6 +1,9 @@
 package ai.shreds.domain;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "category")
+@Builder
 public class DomainCategoryEntity {
 
     @Id

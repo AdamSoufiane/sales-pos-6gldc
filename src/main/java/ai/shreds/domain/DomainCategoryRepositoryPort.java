@@ -1,5 +1,6 @@
 package ai.shreds.domain;
 
+import org.springframework.data.jpa.domain.Specification;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -12,6 +13,13 @@ public interface DomainCategoryRepositoryPort {
      * @return a list of Category entities
      */
     List<DomainCategoryEntity> findAll() throws Exception;
+
+    /**
+     * Retrieves all Category entities from the database that match the given specification.
+     * @param spec the specification to filter the categories
+     * @return a list of Category entities
+     */
+    List<DomainCategoryEntity> findAll(Specification<DomainCategoryEntity> spec) throws Exception;
 
     /**
      * Retrieves a Category entity by its unique identifier.

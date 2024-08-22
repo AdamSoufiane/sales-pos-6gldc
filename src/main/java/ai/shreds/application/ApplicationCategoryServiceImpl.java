@@ -2,8 +2,8 @@ package ai.shreds.application;
 
 import ai.shreds.domain.DomainCategoryEntity;
 import ai.shreds.domain.DomainCategoryRepositoryPort;
-import ai.shreds.shared.ApplicationCategoryServiceException;
-import ai.shreds.shared.ApplicationCategoryMapper;
+import ai.shreds.application.ApplicationCategoryServiceException;
+import ai.shreds.application.mapper.ApplicationCategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -32,7 +33,7 @@ public class ApplicationCategoryServiceImpl implements ApplicationCategoryServic
     public List<DomainCategoryEntity> getAllCategories() {
         try {
             logger.info("Fetching all categories");
-            return categoryRepository.findAll();
+            return categoryRepository.findAll((Specification<DomainCategoryEntity>) null);
         } catch (Exception e) {
             logger.error("Error fetching all categories", e);
             throw new ApplicationCategoryServiceException("Error fetching all categories", e);
@@ -44,7 +45,8 @@ public class ApplicationCategoryServiceImpl implements ApplicationCategoryServic
     public DomainCategoryEntity getCategoryById(Long id) {
         try {
             logger.info("Fetching category by ID: {}", id);
-            return categoryRepository.findById(id).orElseThrow(() -> new ApplicationCategoryServiceException("Category not found"));
+            Optional<DomainCategoryEntity> category = Optional.ofNullable(categoryRepository.findById(id));
+            return category.orElseThrow(() -> new ApplicationCategoryServiceException("Category not found"));
         } catch (IllegalArgumentException e) {
             logger.error("Invalid ID format: {}", id, e);
             throw new ApplicationCategoryServiceException("Invalid ID format", e);

@@ -1,13 +1,9 @@
 package ai.shreds.adapter;
 
-import ai.shreds.shared.AdapterCategoryResponseDTO;
 import ai.shreds.domain.DomainCategoryEntity;
+import ai.shreds.adapter.AdapterCategoryResponseDTO;
 import org.springframework.stereotype.Component;
-import java.time.Timestamp;
 
-/**
- * Mapper class to convert between DomainCategoryEntity and AdapterCategoryResponseDTO.
- */
 @Component
 public class AdapterCategoryMapper {
 
@@ -25,7 +21,7 @@ public class AdapterCategoryMapper {
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
-                .categoryId(entity.getCategoryId())
+                .categoryId(entity.getCategoryId() != null ? entity.getCategoryId().getId() : null)
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
@@ -41,13 +37,18 @@ public class AdapterCategoryMapper {
         if (dto == null) {
             return null;
         }
-        return DomainCategoryEntity.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .categoryId(dto.getCategoryId())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .build();
+        DomainCategoryEntity categoryEntity = new DomainCategoryEntity();
+        categoryEntity.setId(dto.getId());
+        categoryEntity.setName(dto.getName());
+        categoryEntity.setDescription(dto.getDescription());
+        // Assuming you have a method to fetch DomainCategoryEntity by ID for categoryId
+        if (dto.getCategoryId() != null) {
+            DomainCategoryEntity parentCategory = new DomainCategoryEntity();
+            parentCategory.setId(dto.getCategoryId());
+            categoryEntity.setCategoryId(parentCategory);
+        }
+        categoryEntity.setCreatedAt(dto.getCreatedAt());
+        categoryEntity.setUpdatedAt(dto.getUpdatedAt());
+        return categoryEntity;
     }
 }

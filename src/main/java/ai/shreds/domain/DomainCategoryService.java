@@ -1,7 +1,6 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.AdapterCategoryRequestParams;
-import ai.shreds.shared.DomainCategoryEntity;
+import ai.shreds.adapter.AdapterCategoryRequestParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,7 +36,7 @@ public class DomainCategoryService {
      */
     public DomainCategoryEntity getCategoryById(Long id) {
         try {
-            Optional<DomainCategoryEntity> category = categoryRepository.findById(id);
+            Optional<DomainCategoryEntity> category = Optional.ofNullable(categoryRepository.findById(id));
             category.orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + id));
             return category.get();
         } catch (Exception e) {

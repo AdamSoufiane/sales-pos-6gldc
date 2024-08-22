@@ -1,24 +1,21 @@
 package ai.shreds.adapter;
 
 import ai.shreds.application.ApplicationCategoryServicePort;
-import ai.shreds.shared.AdapterCategoryRequestParams;
-import ai.shreds.shared.AdapterCategoryResponseDTO;
-import ai.shreds.shared.DomainCategoryEntity;
-import javax.validation.constraints.NotNull;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import ai.shreds.domain.DomainCategoryEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,17 +69,17 @@ public class AdapterCategoryController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<AdapterCategoryResponseDTO>> searchCategories(@Validated AdapterCategoryRequestParams params, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<List<AdapterCategoryResponseDTO>> searchCategories(@Valid AdapterCategoryRequestParams params, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         if (page < 0 || size < 1) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         try {
             logger.info("Searching categories with params: {}", params);
             Map<String, String> queryParams = Map.of(
-                "name", params.getName(),
-                "categoryId", String.valueOf(params.getCategoryId()),
-                "createdAfter", String.valueOf(params.getCreatedAfter().getTime()),
-                "updatedAfter", String.valueOf(params.getUpdatedAfter().getTime())
+                "name", params.getName() != null ? params.getName() : "",
+                "categoryId", params.getCategoryId() != null ? String.valueOf(params.getCategoryId()) : "",
+                "createdAfter", params.getCreatedAfter() != null ? String.valueOf(params.getCreatedAfter().getTime()) : "",
+                "updatedAfter", params.getUpdatedAfter() != null ? String.valueOf(params.getUpdatedAfter().getTime()) : ""
             );
             List<DomainCategoryEntity> categories = categoryService.searchCategories(queryParams);
             List<AdapterCategoryResponseDTO> response = categories.stream()
