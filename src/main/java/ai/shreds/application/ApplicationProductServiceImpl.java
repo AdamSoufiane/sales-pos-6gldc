@@ -11,9 +11,9 @@ import ai.shreds.application.ApplicationCategoryServicePort;
 import ai.shreds.domain.DomainProductEntity;
 import ai.shreds.domain.DomainProductServicePort;
 import ai.shreds.domain.ProductLogic;
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
-import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -53,21 +53,21 @@ public class ApplicationProductServiceImpl implements ApplicationProductServiceP
         }
 
         // Create a new product entity
-        DomainProductEntity product = new DomainProductEntity(UUID.randomUUID(), params.getName(), params.getDescription(), params.getPrice(), params.getCategoryId(), LocalDateTime.now(), LocalDateTime.now());
+        DomainProductEntity product = new DomainProductEntity(UUID.randomUUID(), params.getName(), params.getDescription(), params.getPrice(), params.getCategoryId(), new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
 
         // Save product entity to the database
         domainProductService.save(product);
 
         // Produce 'ProductAdded' event to Kafka
-        AdapterProductCreateResponse response = product.toAdapterProductCreateResponse();
+        AdapterProductCreateResponse response = product.toAdapterProductCreateResponse(category);
         response.setProductId(product.getId());
         response.setName(product.getName());
         response.setDescription(product.getDescription());
         response.setPrice(product.getPrice());
         response.setCategoryId(product.getCategoryId());
         response.setCategoryName(category.getName());
-        response.setCreatedAt(product.getCreatedAt());
-        response.setUpdatedAt(product.getUpdatedAt());
+        response.setCreatedAt(product.getCreatedAt().toLocalDateTime());
+        response.setUpdatedAt(product.getUpdatedAt().toLocalDateTime());
         kafkaProducer.produceEvent("ProductAdded", response);
 
         // Return response with created product details
@@ -99,13 +99,13 @@ public class ApplicationProductServiceImpl implements ApplicationProductServiceP
         existingProduct.setDescription(params.getDescription());
         existingProduct.setPrice(params.getPrice());
         existingProduct.setCategoryId(params.getCategoryId());
-        existingProduct.setUpdatedAt(LocalDateTime.now());
+        existingProduct.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 
         // Save updated product entity to the database
         domainProductService.save(existingProduct);
 
         // Produce 'ProductUpdated' event to Kafka
-        AdapterProductUpdateResponse response = existingProduct.toAdapterProductUpdateResponse();
+        AdapterProductUpdateResponse response = existingProduct.toAdapterProductUpdateResponse(category);
         response.setProductId(existingProduct.getId());
         response.setName(existingProduct.getName());
         response.setDescription(existingProduct.getDescription());

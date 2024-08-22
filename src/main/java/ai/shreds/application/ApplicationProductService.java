@@ -36,10 +36,9 @@ public class ApplicationProductService implements ApplicationProductServicePort 
      *
      * @param params the product creation request parameters
      * @return the created product response
-     * @throws Exception if any error occurs during product creation
      */
     @Override
-    public AdapterProductCreateResponse createProduct(AdapterProductCreateRequest params) throws Exception {
+    public AdapterProductCreateResponse createProduct(AdapterProductCreateRequest params) {
         // Validate product data
         validateProductData(params);
 
@@ -59,7 +58,7 @@ public class ApplicationProductService implements ApplicationProductServicePort 
         kafkaProducer.produceEvent("ProductAdded", product);
 
         // Return response
-        return product.toAdapterProductCreateResponse();
+        return product.toAdapterProductCreateResponse(category);
     }
 
     /**
@@ -68,10 +67,9 @@ public class ApplicationProductService implements ApplicationProductServicePort 
      * @param id the product ID
      * @param params the product update request parameters
      * @return the updated product response
-     * @throws Exception if any error occurs during product update
      */
     @Override
-    public AdapterProductUpdateResponse updateProduct(UUID id, AdapterProductUpdateRequest params) throws Exception {
+    public AdapterProductUpdateResponse updateProduct(UUID id, AdapterProductUpdateRequest params) {
         // Validate product data
         validateProductData(params);
 
@@ -102,7 +100,7 @@ public class ApplicationProductService implements ApplicationProductServicePort 
         kafkaProducer.produceEvent("ProductUpdated", existingProduct);
 
         // Return response
-        return existingProduct.toAdapterProductUpdateResponse();
+        return existingProduct.toAdapterProductUpdateResponse(category);
     }
 
     /**
@@ -110,10 +108,9 @@ public class ApplicationProductService implements ApplicationProductServicePort 
      *
      * @param id the product ID
      * @return the delete product response
-     * @throws Exception if any error occurs during product deletion
      */
     @Override
-    public AdapterProductDeleteResponse deleteProduct(UUID id) throws Exception {
+    public AdapterProductDeleteResponse deleteProduct(UUID id) {
         // Find existing product
         Optional<DomainProductEntity> existingProductOpt = domainProductService.findById(id);
         if (!existingProductOpt.isPresent()) {
@@ -128,9 +125,7 @@ public class ApplicationProductService implements ApplicationProductServicePort 
         kafkaProducer.produceEvent("ProductDeleted", existingProduct);
 
         // Return response
-        AdapterProductDeleteResponse response = new AdapterProductDeleteResponse();
-        response.setProductId(id);
-        return response;
+        return new AdapterProductDeleteResponse();
     }
 
     /**
@@ -152,6 +147,6 @@ public class ApplicationProductService implements ApplicationProductServicePort 
      * Utility method to validate product data.
      */
     private void validateProductData(AdapterProductUpdateRequest params) {
-        validateProductData(new AdapterProductCreateRequest().setName(params.getName()).setDescription(params.getDescription()).setPrice(params.getPrice()).setCategoryId(params.getCategoryId()));
+        validateProductData(new AdapterProductCreateRequest(params.getName(), params.getDescription(), params.getPrice(), params.getCategoryId()));
     }
 }

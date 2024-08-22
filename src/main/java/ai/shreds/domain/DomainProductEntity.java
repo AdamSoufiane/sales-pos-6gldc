@@ -1,8 +1,8 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.AdapterProductCreateResponse;
-import ai.shreds.shared.AdapterProductUpdateResponse;
-import ai.shreds.shared.AdapterCategoryDTO;
+import ai.shreds.adapter.AdapterCategoryDTO;
+import ai.shreds.adapter.AdapterProductCreateResponse;
+import ai.shreds.adapter.AdapterProductUpdateResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -66,8 +66,8 @@ public class DomainProductEntity {
         response.setDescription(this.description);
         response.setPrice(this.price);
         response.setCategoryId(this.categoryId);
-        response.setCreatedAt(this.createdAt);
-        response.setUpdatedAt(this.updatedAt);
+        response.setCreatedAt(this.createdAt.toLocalDateTime());
+        response.setUpdatedAt(this.updatedAt.toLocalDateTime());
         response.setCategoryName(categoryDTO.getName());
         return response;
     }

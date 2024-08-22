@@ -1,6 +1,6 @@
 package ai.shreds.application;
 
-import ai.shreds.shared.AdapterCategoryDTO;
+import ai.shreds.adapter.AdapterCategoryDTO;
 import java.util.UUID;
 
 /**

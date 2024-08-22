@@ -1,10 +1,10 @@
 package ai.shreds.application;
 
-import ai.shreds.shared.AdapterProductCreateRequest;
-import ai.shreds.shared.AdapterProductCreateResponse;
-import ai.shreds.shared.AdapterProductUpdateRequest;
-import ai.shreds.shared.AdapterProductUpdateResponse;
-import ai.shreds.shared.AdapterProductDeleteResponse;
+import ai.shreds.adapter.AdapterProductCreateRequest;
+import ai.shreds.adapter.AdapterProductCreateResponse;
+import ai.shreds.adapter.AdapterProductUpdateRequest;
+import ai.shreds.adapter.AdapterProductUpdateResponse;
+import ai.shreds.adapter.AdapterProductDeleteResponse;
 import java.util.UUID;
 
 /**

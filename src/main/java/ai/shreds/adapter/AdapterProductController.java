@@ -2,12 +2,12 @@ package ai.shreds.adapter;
 
 import ai.shreds.application.ApplicationProductServicePort;
 import ai.shreds.application.ApplicationCategoryServicePort;
-import ai.shreds.shared.AdapterProductCreateRequest;
-import ai.shreds.shared.AdapterProductCreateResponse;
-import ai.shreds.shared.AdapterProductUpdateRequest;
-import ai.shreds.shared.AdapterProductUpdateResponse;
-import ai.shreds.shared.AdapterProductDeleteResponse;
-import ai.shreds.shared.AdapterCategoryDTO;
+import ai.shreds.adapter.AdapterProductCreateRequest;
+import ai.shreds.adapter.AdapterProductCreateResponse;
+import ai.shreds.adapter.AdapterProductUpdateRequest;
+import ai.shreds.adapter.AdapterProductUpdateResponse;
+import ai.shreds.adapter.AdapterProductDeleteResponse;
+import ai.shreds.adapter.AdapterCategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

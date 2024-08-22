@@ -44,7 +44,6 @@ public class InfrastructureCategoryRepositoryImpl implements DomainCategoryRepos
         }
     }
 
-    @Override
     @Transactional
     public void save(DomainCategoryEntity category) {
         try {

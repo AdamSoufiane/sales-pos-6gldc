@@ -1,6 +1,6 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.AdapterCategoryDTO;
+import ai.shreds.adapter.AdapterCategoryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -60,8 +60,8 @@ public class DomainCategoryEntity {
                 .name(this.name)
                 .description(this.description.orElse(null))
                 .categoryId(this.categoryId.orElse(null))
-                .createdAt(this.createdAt)
-                .updatedAt(this.updatedAt)
+                .createdAt(this.createdAt.toInstant())
+                .updatedAt(this.updatedAt.toInstant())
                 .build();
     }
 }

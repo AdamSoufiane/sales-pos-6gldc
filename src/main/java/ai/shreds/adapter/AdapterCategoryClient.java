@@ -1,6 +1,6 @@
 package ai.shreds.adapter;
 
-import ai.shreds.shared.AdapterCategoryDTO;
+import ai.shreds.adapter.AdapterCategoryDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;

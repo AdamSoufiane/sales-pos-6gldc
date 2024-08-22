@@ -2,7 +2,7 @@ package ai.shreds.application;
 
 import ai.shreds.domain.DomainCategoryEntity;
 import ai.shreds.domain.DomainCategoryServicePort;
-import ai.shreds.shared.AdapterCategoryDTO;
+import ai.shreds.adapter.AdapterCategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
