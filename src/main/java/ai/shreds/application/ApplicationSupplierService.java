@@ -26,7 +26,8 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
     @Transactional
     public SharedSupplierDTO createSupplier(AdapterCreateSupplierRequest request) {
         validateCreateRequest(request);
-        DomainSupplierEntity supplierEntity = domainSupplierEntityMapper.toEntity(request);
+        SharedSupplierDTO sharedSupplierDTO = new SharedSupplierDTO(null, request.getName(), request.getContact_info(), request.getAddress(), null, null);
+        DomainSupplierEntity supplierEntity = domainSupplierEntityMapper.toEntity(sharedSupplierDTO);
         domainSupplierRepositoryPort.save(supplierEntity);
         log.info("Supplier created with id: {}", supplierEntity.getId());
         return domainSupplierEntityMapper.toDTO(supplierEntity);
@@ -36,20 +37,17 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
     @Transactional
     public SharedSupplierDTO updateSupplier(Long id, AdapterUpdateSupplierRequest request) {
         validateUpdateRequest(request);
-        Optional<DomainSupplierEntity> supplierEntity = domainSupplierRepositoryPort.findById(id);
-        supplierEntity.ifPresentOrElse(
-                existingSupplier -> {
-                    existingSupplier.setName(request.getName() != null ? request.getName() : existingSupplier.getName());
-                    existingSupplier.setContact_info(request.getContact_info() != null ? request.getContact_info() : existingSupplier.getContact_info());
-                    existingSupplier.setAddress(request.getAddress() != null ? request.getAddress() : existingSupplier.getAddress());
-                    domainSupplierRepositoryPort.save(existingSupplier);
-                    log.info("Supplier updated with id: {}", id);
-                },
-                () -> {
-                    throw new SupplierNotFoundException("Supplier not found");
-                }
-        );
-        return supplierEntity.map(domainSupplierEntityMapper::toDTO).orElseThrow(() -> new SupplierNotFoundException("Supplier not found")); 
+        DomainSupplierEntity supplierEntity = domainSupplierRepositoryPort.findById(id);
+        if (supplierEntity != null) {
+            supplierEntity.setName(request.getName() != null ? request.getName() : supplierEntity.getName());
+            supplierEntity.setContact_info(request.getContact_info() != null ? request.getContact_info() : supplierEntity.getContact_info());
+            supplierEntity.setAddress(request.getAddress() != null ? request.getAddress() : supplierEntity.getAddress());
+            domainSupplierRepositoryPort.save(supplierEntity);
+            log.info("Supplier updated with id: {}", id);
+            return domainSupplierEntityMapper.toDTO(supplierEntity);
+        } else {
+            throw new SupplierNotFoundException("Supplier not found");
+        }
     }
 
     @Override
@@ -97,6 +95,11 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
                 throw new IllegalArgumentException("Address is invalid");
             }
         }
+    }
+
+    @Override
+    public void handleDeleteSupplierException(Exception e) {
+        // Implementation
     }
 
     public static class SupplierNotFoundException extends RuntimeException {

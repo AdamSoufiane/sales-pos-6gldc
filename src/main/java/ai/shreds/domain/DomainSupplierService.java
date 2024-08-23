@@ -1,10 +1,10 @@
 package ai.shreds.domain;
 
-import ai.shreds.domain.entity.DomainSupplierEntity;
-import ai.shreds.domain.repository.DomainSupplierRepositoryPort;
-import ai.shreds.domain.exception.SupplierNotFoundException;
-import ai.shreds.domain.exception.InvalidSupplierDataException;
-import ai.shreds.domain.exception.InvalidSupplierIdException;
+import ai.shreds.domain.DomainSupplierEntity;
+import ai.shreds.domain.DomainSupplierRepositoryPort;
+import ai.shreds.domain.DomainSupplierService.SupplierNotFoundException;
+import ai.shreds.domain.DomainSupplierService.InvalidSupplierDataException;
+import ai.shreds.domain.DomainSupplierService.InvalidSupplierIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +54,7 @@ public class DomainSupplierService {
         if (supplier.getName() == null || supplier.getName().isEmpty()) {
             throw new InvalidSupplierDataException("Supplier name is required");
         }
-        if (supplier.getContactInfo() == null || supplier.getContactInfo().isEmpty()) {
+        if (supplier.getContact_info() == null || supplier.getContact_info().isEmpty()) {
             throw new InvalidSupplierDataException("Supplier contact information is required");
         }
         if (supplier.getAddress() == null || supplier.getAddress().isEmpty()) {
@@ -72,31 +72,31 @@ public class DomainSupplierService {
             throw new InvalidSupplierIdException("Invalid supplier ID");
         }
     }
-}
 
-/**
- * Exception thrown when a supplier is not found.
- */
-class SupplierNotFoundException extends RuntimeException {
-    public SupplierNotFoundException(String message) {
-        super(message);
+    /**
+     * Exception thrown when a supplier is not found.
+     */
+    static class SupplierNotFoundException extends RuntimeException {
+        public SupplierNotFoundException(String message) {
+            super(message);
+        }
     }
-}
 
-/**
- * Exception thrown when supplier data is invalid.
- */
-class InvalidSupplierDataException extends RuntimeException {
-    public InvalidSupplierDataException(String message) {
-        super(message);
+    /**
+     * Exception thrown when supplier data is invalid.
+     */
+    static class InvalidSupplierDataException extends RuntimeException {
+        public InvalidSupplierDataException(String message) {
+            super(message);
+        }
     }
-}
 
-/**
- * Exception thrown when a supplier ID is invalid.
- */
-class InvalidSupplierIdException extends RuntimeException {
-    public InvalidSupplierIdException(String message) {
-        super(message);
+    /**
+     * Exception thrown when a supplier ID is invalid.
+     */
+    static class InvalidSupplierIdException extends RuntimeException {
+        public InvalidSupplierIdException(String message) {
+            super(message);
+        }
     }
 }

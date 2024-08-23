@@ -60,6 +60,6 @@ public class DomainSupplierEntity {
     }
 
     public SharedSupplierDTO toDTO() {
-        return new SharedSupplierDTO(id, name, contact_info, address, created_at == null ? null : created_at.toString(), updated_at == null ? null : updated_at.toString());
+        return new SharedSupplierDTO(id, name, contact_info, address, created_at, updated_at);
     }
 }

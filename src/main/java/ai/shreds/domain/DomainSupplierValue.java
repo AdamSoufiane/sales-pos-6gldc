@@ -20,7 +20,7 @@ public class DomainSupplierValue {
     private final String name;
 
     @NonNull
-    @Pattern(regexp = "(\d{10,})\s*,\s*(.+@.+\..+)", message = "Supplier contact information must include a valid phone number and email address.")
+    @Pattern(regexp = "(\\d{10,})\\s*,\\s*(.+@.+\\..+)", message = "Supplier contact information must include a valid phone number and email address.")
     private final String contact_info;
 
     @NonNull

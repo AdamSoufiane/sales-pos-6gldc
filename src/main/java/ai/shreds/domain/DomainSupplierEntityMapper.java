@@ -23,14 +23,14 @@ public class DomainSupplierEntityMapper {
             return null;
         }
         logger.info("Converting DomainSupplierEntity to SharedSupplierDTO: {}", entity);
-        return SharedSupplierDTO.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .contactInfo(entity.getContactInfo())
-                .address(entity.getAddress())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .build();
+        SharedSupplierDTO dto = new SharedSupplierDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setContact_info(entity.getContact_info());
+        dto.setAddress(entity.getAddress());
+        dto.setCreated_at(entity.getCreated_at());
+        dto.setUpdated_at(entity.getUpdated_at());
+        return dto;
     }
 
     /**
@@ -44,13 +44,13 @@ public class DomainSupplierEntityMapper {
             return null;
         }
         logger.info("Converting SharedSupplierDTO to DomainSupplierEntity: {}", dto);
-        return DomainSupplierEntity.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .contactInfo(dto.getContactInfo())
-                .address(dto.getAddress())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .build();
+        DomainSupplierEntity entity = new DomainSupplierEntity();
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setContact_info(dto.getContact_info());
+        entity.setAddress(dto.getAddress());
+        entity.setCreated_at(dto.getCreated_at());
+        entity.setUpdated_at(dto.getUpdated_at());
+        return entity;
     }
 }
