@@ -29,7 +29,7 @@ public interface DomainInventoryEntityMapper {
      * @return AdapterProductAddedResponseDTO with the response message.
      */
     @Mapping(source = "message", target = "message")
-    AdapterProductAddedResponseDTO mapToAdapterResponse(String domainResponse);
+    AdapterProductAddedResponseDTO mapToAdapterResponse(DomainProductAddedEventResponse domainResponse);
 
     /**
      * Safely maps AdapterProductAddedRequestParams to DomainInventoryEntity with validation.

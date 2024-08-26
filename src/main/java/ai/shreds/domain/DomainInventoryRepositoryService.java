@@ -4,8 +4,6 @@ import ai.shreds.infrastructure.InfrastructureInventoryRepositoryImpl;
 import ai.shreds.infrastructure.InfrastructureException;
 import ai.shreds.infrastructure.InfrastructureDatabaseInventoryModel;
 import ai.shreds.infrastructure.InfrastructureInventoryRepositoryImplMapper;
-import ai.shreds.domain.DomainInventoryEntity;
-import ai.shreds.domain.DomainProductAddedEventException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

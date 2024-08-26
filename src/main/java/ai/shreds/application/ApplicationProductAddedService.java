@@ -2,18 +2,15 @@ package ai.shreds.application;
 
 import ai.shreds.adapter.AdapterProductAddedRequestParams;
 import ai.shreds.adapter.AdapterProductAddedResponseDTO;
-import ai.shreds.application.ApplicationProductAddedException;
-import ai.shreds.application.ApplicationProductAddedOutputPort;
-import ai.shreds.application.ApplicationProductAddedInputPort;
 import ai.shreds.domain.DomainProductAddedEvent;
 import ai.shreds.domain.DomainProductAddedEventPort;
 import ai.shreds.domain.DomainProductAddedEventResponse;
-lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

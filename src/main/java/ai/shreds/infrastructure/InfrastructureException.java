@@ -1,13 +1,5 @@
 package ai.shreds.infrastructure;
 
-import lombok.Getter;
-import lombok.Setter;
-
-/**
- * Exception class to handle infrastructure-related exceptions.
- */
-@Getter
-@Setter
 public class InfrastructureException extends RuntimeException {
 
     /**

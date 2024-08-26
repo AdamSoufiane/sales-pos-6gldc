@@ -1,32 +1,44 @@
 package ai.shreds.domain;
 
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Future;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
+import java.time.LocalDateTime;
 
 /**
  * Represents an inventory record for a product.
  */
 @Getter
-@ToString
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class DomainInventoryEntity {
-    @NotBlank(message = "Product ID must not be null or empty")
+
+    /**
+     * Unique identifier for the newly added product.
+     */
     private String productId;
-    @Min(value = 1, message = "Initial quantity must be a positive integer")
+
+    /**
+     * Initial stock quantity of the newly added product.
+     */
     private int initialQuantity;
-    @Future(message = "Creation time must be in the future")
+
+    /**
+     * Timestamp when the product was added to the inventory.
+     */
     private LocalDateTime creationTime;
-    @Min(value = 0, message = "Alert quantity must be non-negative")
+
+    /**
+     * The quantity threshold at which an alert should be triggered.
+     */
     private int alertQuantity;
-    @NotBlank(message = "Warehouse location must not be null or empty")
+
+    /**
+     * The default warehouse location where the product is stored.
+     */
     private String warehouseLocation;
 }

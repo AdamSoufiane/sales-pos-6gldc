@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.springframework.data.mongodb.core.MongoTransactionManager;
+import org.springframework.data.mongodb.MongoTransactionManager;
 
 @Configuration
 @EnableTransactionManagement

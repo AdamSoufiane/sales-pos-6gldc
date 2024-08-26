@@ -1,13 +1,13 @@
 package ai.shreds.adapter;
 
-import ai.shreds.adapter.AdapterProductAddedRequestParams;
-import ai.shreds.adapter.AdapterProductAddedResponseDTO;
 import ai.shreds.domain.DomainProductAddedEvent;
 import ai.shreds.domain.DomainProductAddedEventResponse;
+import ai.shreds.adapter.AdapterProductAddedRequestParams;
+import ai.shreds.adapter.AdapterProductAddedResponseDTO;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +23,13 @@ public class AdapterProductAddedEventMapper {
         }
 
         logger.info("Mapping AdapterProductAddedRequestParams to DomainProductAddedEvent");
-        return DomainProductAddedEvent.builder()
-                .productId(params.getProductId())
-                .initialQuantity(params.getInitialQuantity())
-                .creationTime(params.getCreationTime())
-                .alertQuantity(params.getAlertQuantity())
-                .warehouseLocation(params.getWarehouseLocation())
-                .build();
+        DomainProductAddedEvent domainEvent = new DomainProductAddedEvent();
+        domainEvent.setProductId(params.getProductId());
+        domainEvent.setInitialQuantity(params.getInitialQuantity());
+        domainEvent.setCreationTime(params.getCreationTime());
+        domainEvent.setAlertQuantity(params.getAlertQuantity());
+        domainEvent.setWarehouseLocation(params.getWarehouseLocation());
+        return domainEvent;
     }
 
     public AdapterProductAddedResponseDTO mapToAdapterResponse(DomainProductAddedEventResponse response) {
@@ -38,8 +38,6 @@ public class AdapterProductAddedEventMapper {
         }
 
         logger.info("Mapping DomainProductAddedEventResponse to AdapterProductAddedResponseDTO");
-        return AdapterProductAddedResponseDTO.builder()
-                .message(response.getMessage())
-                .build();
+        return new AdapterProductAddedResponseDTO(response.getMessage());
     }
 }

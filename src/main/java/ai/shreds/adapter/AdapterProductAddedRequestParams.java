@@ -3,7 +3,7 @@ package ai.shreds.adapter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ai.shreds.shared.SharedRequestParams;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdapterProductAddedRequestParams extends SharedRequestParams {
+public class AdapterProductAddedRequestParams {
 
     @NotBlank(message = "Product ID cannot be blank")
     private String productId;

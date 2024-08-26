@@ -1,19 +1,15 @@
 package ai.shreds.domain;
 
 import ai.shreds.application.ApplicationProductAddedException;
-import ai.shreds.domain.DomainInventoryRepositoryPort;
-import ai.shreds.domain.DomainProductAddedEvent;
-import ai.shreds.domain.DomainProductAddedEventResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.DateTime;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Max;
+import javax.validation.ValidationException;
+import ai.shreds.domain.DomainProductAddedEvent;
+import ai.shreds.domain.DomainProductAddedEventResponse;
+import ai.shreds.domain.DomainInventoryEntity;
+import ai.shreds.domain.DomainInventoryRepositoryPort;
 
 @Slf4j
 @Service
@@ -78,11 +74,5 @@ public class DomainProductAddedEventService implements DomainProductAddedEventPo
             inventoryEntity.setInitialQuantity(inventoryEntity.getInitialQuantity() + event.getInitialQuantity());
         }
         repositoryPort.save(inventoryEntity);
-    }
-
-    public static class ValidationException extends RuntimeException {
-        public ValidationException(String message) {
-            super(message);
-        }
     }
 }

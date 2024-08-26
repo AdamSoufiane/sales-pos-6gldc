@@ -1,11 +1,10 @@
 package ai.shreds.infrastructure;
 
 import ai.shreds.domain.DomainInventoryEntity;
-import ai.shreds.infrastructure.model.InfrastructureDatabaseInventoryModel;
-import org.springframework.stereotype.Component;
-import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import lombok.Data;
 
 /**
  * Mapper class to convert between DomainInventoryEntity and InfrastructureDatabaseInventoryModel.
