@@ -1,8 +1,8 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.SharedInventoryDomainEntity;
 import ai.shreds.shared.SharedProductDomainEntity;
-import ai.shreds.shared.dto.SharedAlertDTO;
+import ai.shreds.shared.SharedInventoryDomainEntity;
+import ai.shreds.shared.SharedAlertDTO;
 import ai.shreds.infrastructure.InfrastructureProductRepositoryPort;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

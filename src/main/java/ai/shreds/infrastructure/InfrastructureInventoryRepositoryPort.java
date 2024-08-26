@@ -13,9 +13,8 @@ public interface InfrastructureInventoryRepositoryPort {
      *
      * @param productId the unique identifier of the product
      * @return the inventory information of the product
-     * @throws InventoryNotFoundException if the inventory information is not found
      */
-    SharedInventoryDomainEntity findByProductId(UUID productId) throws InventoryNotFoundException;
+    SharedInventoryDomainEntity findByProductId(UUID productId);
 
     /**
      * Saves new or updated inventory information to the database.
@@ -30,13 +29,4 @@ public interface InfrastructureInventoryRepositoryPort {
      * @param productId the unique identifier of the product
      */
     void deleteByProductId(UUID productId);
-}
-
-/**
- * Custom exception to be thrown when inventory information is not found.
- */
-class InventoryNotFoundException extends Exception {
-    public InventoryNotFoundException(String message) {
-        super(message);
-    }
 }

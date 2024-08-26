@@ -1,6 +1,6 @@
 package ai.shreds.application;
 
-import ai.shreds.shared.dto.SharedAlertDTO;
+import ai.shreds.shared.SharedAlertDTO;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,11 +35,4 @@ public class ApplicationAlertServiceImpl implements ApplicationAlertServiceOutpu
         alertServicePort.sendNotification(alert.getProductId(), alertMessage);
     }
 
-}
-
-/**
- * Port for sending notifications.
- */
-interface AlertServicePort {
-    void sendNotification(UUID productId, String message);
 }

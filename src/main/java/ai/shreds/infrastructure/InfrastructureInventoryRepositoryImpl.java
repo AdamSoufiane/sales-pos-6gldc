@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -20,12 +21,12 @@ public class InfrastructureInventoryRepositoryImpl implements DomainInventoryRep
     private EntityManager entityManager;
 
     @Override
-    public SharedInventoryDomainEntity findByProductId(UUID productId) {
+    public Optional<SharedInventoryDomainEntity> findByProductId(UUID productId) {
         try {
-            return entityManager.find(SharedInventoryDomainEntity.class, productId);
+            return Optional.ofNullable(entityManager.find(SharedInventoryDomainEntity.class, productId));
         } catch (Exception e) {
             logger.error("Error finding inventory by productId: {}", productId, e);
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -47,7 +48,7 @@ public class InfrastructureInventoryRepositoryImpl implements DomainInventoryRep
     @Transactional
     public void deleteByProductId(UUID productId) {
         try {
-            SharedInventoryDomainEntity inventory = findByProductId(productId);
+            SharedInventoryDomainEntity inventory = findByProductId(productId).orElse(null);
             if (inventory != null) {
                 if (entityManager.contains(inventory)) {
                     entityManager.remove(inventory);

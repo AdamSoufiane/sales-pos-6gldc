@@ -6,8 +6,8 @@ import ai.shreds.shared.SharedProductAddedEventDTO;
 import ai.shreds.shared.SharedProductDeletedEventDTO;
 import ai.shreds.shared.SharedProductUpdatedEventDTO;
 import ai.shreds.shared.SharedDomainInventoryMapper;
-lombok.RequiredArgsConstructor;
-lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

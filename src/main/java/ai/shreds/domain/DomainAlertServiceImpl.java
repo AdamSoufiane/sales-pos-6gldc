@@ -1,6 +1,6 @@
 package ai.shreds.domain;
 
-import ai.shreds.shared.dto.SharedAlertDTO;
+import ai.shreds.shared.SharedAlertDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DomainAlertServiceImpl implements DomainAlertServicePort {
 
-    private static final Logger log = LoggerFactory.getLogger(DomainAlertServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DomainAlertServiceImpl.class);
 
     /**
      * Triggers an alert when inventory levels fall below a specified threshold.
@@ -22,10 +22,10 @@ public class DomainAlertServiceImpl implements DomainAlertServicePort {
     @Override
     public void triggerAlert(SharedAlertDTO alert) {
         try {
-            log.info("Triggering alert for product ID: {}", alert.getProductId());
+            logger.info("Triggering alert for product ID: {}", alert.getProductId());
             sendAlert(alert);
         } catch (Exception e) {
-            log.error("Error while triggering alert for product ID: {}", alert.getProductId(), e);
+            logger.error("Error while triggering alert for product ID: {}", alert.getProductId(), e);
             throw new AlertTriggerException("Failed to trigger alert for product ID: " + alert.getProductId(), e);
         }
     }
@@ -33,7 +33,7 @@ public class DomainAlertServiceImpl implements DomainAlertServicePort {
     private void sendAlert(SharedAlertDTO alert) {
         // Implementation for sending alert
         // This could involve calling another service or sending a notification
-        log.info("Alert sent: {}", alert.getAlertMessage());
+        logger.info("Alert sent: {}", alert.getAlertMessage());
     }
 
     private static class AlertTriggerException extends RuntimeException {

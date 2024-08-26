@@ -1,4 +1,4 @@
-package ai.shreds.shared.dto;
+package ai.shreds.shared;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
