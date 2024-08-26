@@ -1,57 +1,32 @@
-package ai.shreds.domain; 
-  
- import lombok.AllArgsConstructor; 
- import lombok.Builder; 
- import lombok.Getter; 
- import lombok.NoArgsConstructor; 
- import lombok.ToString; 
- import java.time.LocalDateTime; 
-  
- /** 
-  * Represents an inventory record for a product. 
-  */ 
- @Getter 
- @ToString 
- @NoArgsConstructor 
- @AllArgsConstructor 
- @Builder 
- public class DomainInventoryEntity { 
-     private String productId; 
-     private int initialQuantity; 
-     private LocalDateTime creationTime; 
-     private int alertQuantity; 
-     private String warehouseLocation; 
-  
-     /** 
-      * Validates the inventory entity fields. 
-      * 
-      * @throws IllegalArgumentException if any field is invalid 
-      */ 
-     public void validate() { 
-         if (productId == null || productId.isEmpty()) { 
-             throw new IllegalArgumentException("Product ID must not be null or empty"); 
-         } 
-         if (initialQuantity <= 0) { 
-             throw new IllegalArgumentException("Initial quantity must be a positive integer"); 
-         } 
-         if (alertQuantity < 0 || alertQuantity > initialQuantity) { 
-             throw new IllegalArgumentException("Alert quantity must be between 0 and initial quantity"); 
-         } 
-         if (warehouseLocation == null || warehouseLocation.isEmpty()) { 
-             throw new IllegalArgumentException("Warehouse location must not be null or empty"); 
-         } 
-     } 
-  
-     /** 
-      * Constructor to enforce validation during object creation. 
-      */ 
-     public DomainInventoryEntity(String productId, int initialQuantity, LocalDateTime creationTime, int alertQuantity, String warehouseLocation) { 
-         this.productId = productId; 
-         this.initialQuantity = initialQuantity; 
-         this.creationTime = creationTime; 
-         this.alertQuantity = alertQuantity; 
-         this.warehouseLocation = warehouseLocation; 
-         validate(); 
-     } 
- } 
- 
+package ai.shreds.domain;
+
+import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Future;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Represents an inventory record for a product.
+ */
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class DomainInventoryEntity {
+    @NotBlank(message = "Product ID must not be null or empty")
+    private String productId;
+    @Min(value = 1, message = "Initial quantity must be a positive integer")
+    private int initialQuantity;
+    @Future(message = "Creation time must be in the future")
+    private LocalDateTime creationTime;
+    @Min(value = 0, message = "Alert quantity must be non-negative")
+    private int alertQuantity;
+    @NotBlank(message = "Warehouse location must not be null or empty")
+    private String warehouseLocation;
+}
