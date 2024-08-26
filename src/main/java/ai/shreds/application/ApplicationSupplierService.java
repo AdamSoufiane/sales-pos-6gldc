@@ -24,7 +24,7 @@ public class ApplicationSupplierService implements ApplicationGetAllSuppliersInp
     public List<SharedSupplierDTO> getAllSuppliers(SharedRequestParams params) {
         List<DomainSupplierEntity> suppliers = domainSupplierRepositoryPort.findAll(params);
         return suppliers.stream()
-                .map(adapterSupplierMapper::toDTO)
+                .map(adapterSupplierMapper::toSharedSupplierDTO)
                 .collect(Collectors.toList());
     }
 
@@ -34,6 +34,6 @@ public class ApplicationSupplierService implements ApplicationGetAllSuppliersInp
         if (supplier == null) {
             throw new SupplierNotFoundException("Supplier not found.");
         }
-        return adapterSupplierMapper.toDTO(supplier);
+        return adapterSupplierMapper.toSharedSupplierDTO(supplier);
     }
 }

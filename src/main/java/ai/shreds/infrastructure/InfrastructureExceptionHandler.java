@@ -1,6 +1,6 @@
 package ai.shreds.infrastructure;
 
-import ai.shreds.domain.exception.SupplierNotFoundException;
+import ai.shreds.domain.SupplierNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,7 +14,7 @@ public class InfrastructureExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(InfrastructureExceptionHandler.class);
 
     @ExceptionHandler(SupplierNotFoundException.class)
-    public ResponseEntity<String> handleSupplierNotFoundException(SupplierNotFoundException e) {
+    public ResponseEntity<String> handleSupplierNotFoundException(ai.shreds.domain.SupplierNotFoundException e) {
         logger.error("Supplier not found: ", e);
         return new ResponseEntity<>("Supplier not found.", HttpStatus.NOT_FOUND);
     }

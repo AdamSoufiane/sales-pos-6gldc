@@ -6,7 +6,7 @@ import ai.shreds.shared.SharedRequestParams;
 import ai.shreds.shared.SharedSupplierDTO;
 import ai.shreds.adapter.AdapterSupplierMapper;
 import ai.shreds.adapter.AdapterSupplierResponseDTO;
-import ai.shreds.exception.SupplierNotFoundException;
+import ai.shreds.domain.SupplierNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,19 +33,22 @@ public class AdapterSupplierController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String contact_info,
             @RequestParam(required = false) String address) {
-        SharedRequestParams params = new SharedRequestParams(name, contact_info, address);
+        SharedRequestParams params = new SharedRequestParams();
+        params.setName(name);
+        params.setContact_info(contact_info);
+        params.setAddress(address);
         List<SharedSupplierDTO> suppliers = getAllSuppliersInputPort.getAllSuppliers(params);
         List<AdapterSupplierResponseDTO> response = suppliers.stream()
-                .map(supplierMapper::toDTO)
+                .map(supplierMapper::toAdapterSupplierResponseDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AdapterSupplierResponseDTO> getSupplierById(@PathVariable Long id) {
+    public ResponseEntity<AdapterSupplierResponseDTO> getSupplierById(@PathVariable Integer id) {
         try {
-            SharedSupplierDTO supplier = getSupplierByIdInputPort.getSupplierById(id);
-            AdapterSupplierResponseDTO response = supplierMapper.toDTO(supplier);
+            SharedSupplierDTO supplier = getSupplierByIdInputPort.getSupplierById(id.longValue());
+            AdapterSupplierResponseDTO response = supplierMapper.toAdapterSupplierResponseDTO(supplier);
             return ResponseEntity.ok(response);
         } catch (SupplierNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

@@ -4,7 +4,6 @@ import ai.shreds.shared.SharedRequestParams;
 import ai.shreds.domain.DomainSupplierServiceException;
 import ai.shreds.domain.SupplierNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,8 +35,11 @@ public class DomainSupplierService implements DomainSupplierRepositoryPort {
     @Override
     public DomainSupplierEntity findById(Long id) {
         try {
-            Optional<DomainSupplierEntity> supplier = repository.findById(id);
-            return supplier.orElseThrow(() -> new SupplierNotFoundException("Supplier not found with ID: " + id));
+            DomainSupplierEntity supplier = repository.findById(id);
+            if (supplier == null) {
+                throw new SupplierNotFoundException("Supplier not found with ID: " + id);
+            }
+            return supplier;
         } catch (SupplierNotFoundException e) {
             throw e;
         } catch (Exception e) {

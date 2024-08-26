@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ai.shreds.domain.SupplierNotFoundException;
 
 @ControllerAdvice
 public class InfrastructureException {
@@ -20,8 +21,8 @@ public class InfrastructureException {
         return new ResponseEntity<>("Database error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(SupplierNotFoundException.class)
-    public ResponseEntity<String> handleSupplierNotFoundException(SupplierNotFoundException e, WebRequest request) {
+    @ExceptionHandler(ai.shreds.domain.SupplierNotFoundException.class)
+    public ResponseEntity<String> handleSupplierNotFoundException(ai.shreds.domain.SupplierNotFoundException e, WebRequest request) {
         logger.error("Supplier not found: ", e);
         return new ResponseEntity<>("Supplier not found.", HttpStatus.NOT_FOUND);
     }

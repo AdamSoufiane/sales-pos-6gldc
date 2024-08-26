@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ai.shreds.domain.DomainSupplierServiceException;
-import ai.shreds.infrastructure.InfrastructureException;
+ai.shreds.domain.DomainSupplierServiceException;
+ai.shreds.infrastructure.InfrastructureException;
 
 @ControllerAdvice
 public class ApplicationSupplierServiceException {
@@ -20,7 +20,7 @@ public class ApplicationSupplierServiceException {
         return new ResponseEntity<>(new ErrorResponse("Supplier not found."), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InfrastructureException.class)
+    @ExceptionHandler(ai.shreds.infrastructure.InfrastructureException.class)
     public ResponseEntity<ErrorResponse> handleInfrastructureException(InfrastructureException e) {
         logger.error("Internal server error.", e);
         return new ResponseEntity<>(new ErrorResponse("Internal server error."), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
+import ai.shreds.domain.SupplierNotFoundException;
 
 @Repository
 public class InfrastructureSupplierRepositoryImpl implements DomainSupplierRepositoryPort {
@@ -66,11 +67,5 @@ public class InfrastructureSupplierRepositoryImpl implements DomainSupplierRepos
         logger.info("Finding supplier by ID: {}", id);
         return Optional.ofNullable(entityManager.find(DomainSupplierEntity.class, id))
                       .orElseThrow(() -> new SupplierNotFoundException("Supplier not found."));
-    }
-
-    private static class SupplierNotFoundException extends RuntimeException {
-        public SupplierNotFoundException(String message) {
-            super(message);
-        }
     }
 }
