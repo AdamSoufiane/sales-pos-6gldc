@@ -34,4 +34,11 @@ public class DomainSupplierEntity {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updated_at;
+
+    @Column(name = "due_date")
+    private LocalDateTime due_date;
+
+    @Column(name = "company_name", nullable = false, length = 255)
+    @Size(max = 255)
+    private String company_name;
 }

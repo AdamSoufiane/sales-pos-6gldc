@@ -29,17 +29,11 @@ public class AdapterSupplierController {
     private final AdapterSupplierMapper supplierMapper;
 
     @GetMapping
-    public ResponseEntity<List<AdapterSupplierResponseDTO>> getAllSuppliers(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String contact_info,
-            @RequestParam(required = false) String address) {
-        SharedRequestParams params = new SharedRequestParams();
-        params.setName(name);
-        params.setContact_info(contact_info);
-        params.setAddress(address);
-        List<SharedSupplierDTO> suppliers = getAllSuppliersInputPort.getAllSuppliers(params);
+    public ResponseEntity<List<AdapterSupplierResponseDTO>> getAllSuppliers(AdapterSupplierRequestParams params) {
+        SharedRequestParams sharedParams = new SharedRequestParams(params.getName(), params.getContact_info(), params.getAddress());
+        List<SharedSupplierDTO> suppliers = getAllSuppliersInputPort.getAllSuppliers(sharedParams);
         List<AdapterSupplierResponseDTO> response = suppliers.stream()
-                .map(supplierMapper::toAdapterSupplierResponseDTO)
+                .map(supplierMapper::toDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
@@ -47,8 +41,8 @@ public class AdapterSupplierController {
     @GetMapping("/{id}")
     public ResponseEntity<AdapterSupplierResponseDTO> getSupplierById(@PathVariable Integer id) {
         try {
-            SharedSupplierDTO supplier = getSupplierByIdInputPort.getSupplierById(id.longValue());
-            AdapterSupplierResponseDTO response = supplierMapper.toAdapterSupplierResponseDTO(supplier);
+            SharedSupplierDTO supplier = getSupplierByIdInputPort.getSupplierById(id);
+            AdapterSupplierResponseDTO response = supplierMapper.toDTO(supplier);
             return ResponseEntity.ok(response);
         } catch (SupplierNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

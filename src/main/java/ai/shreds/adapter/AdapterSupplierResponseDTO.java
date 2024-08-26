@@ -17,4 +17,6 @@ public class AdapterSupplierResponseDTO {
     private String address;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private LocalDateTime due_date;
+    private String company_name;
 }

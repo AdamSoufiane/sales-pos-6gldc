@@ -44,4 +44,15 @@ public class SharedSupplierDTO {
      */
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updated_at;
+
+    /**
+     * Due date for the supplier payment.
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime due_date;
+
+    /**
+     * Company name of the supplier.
+     */
+    private String company_name;
 }
