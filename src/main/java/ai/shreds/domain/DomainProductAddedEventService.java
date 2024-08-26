@@ -29,6 +29,8 @@ public class DomainProductAddedEventService implements DomainProductAddedEventPo
         }
         try {
             log.info("Processing ProductAdded event: {}", event);
+            // Update inventory
+            updateInventory(event);
             // Return success response
             return new DomainProductAddedEventResponse("ProductAdded event consumed and processed successfully");
         } catch (ValidationException e) {

@@ -14,9 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
@@ -40,9 +37,6 @@ public class ApplicationProductAddedService implements ApplicationProductAddedIn
 
             // Process domain event
             DomainProductAddedEventResponse domainResponse = domainProductAddedEventPort.processEvent(domainEvent);
-
-            // Update inventory
-            outputPort.updateInventory(params);
 
             // Map to adapter response
             return mapToAdapterResponse(domainResponse);
@@ -89,11 +83,5 @@ public class ApplicationProductAddedService implements ApplicationProductAddedIn
 
     private AdapterProductAddedResponseDTO handleException(Exception e) {
         return new AdapterProductAddedResponseDTO("Error: " + e.getMessage());
-    }
-
-    @FeignClient(name = "product-service")
-    public interface ProductClient {
-        @GetMapping("/product/{id}")
-        boolean checkProductExists(@PathVariable("id") String productId);
     }
 }
