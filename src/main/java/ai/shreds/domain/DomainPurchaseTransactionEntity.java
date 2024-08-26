@@ -33,7 +33,7 @@ public class DomainPurchaseTransactionEntity {
             return false;
         }
         for (DomainProductEntity product : products) {
-            if (product == null || product.getId() == null || product.getId().isEmpty() || product.getPurchasePrice() <= 0 || product.getQuantity() <= 0) {
+            if (product == null || product.getProductId() == null || product.getProductId().isEmpty() || product.getPurchasePrice() <= 0 || product.getQuantity() <= 0) {
                 return false;
             }
         }

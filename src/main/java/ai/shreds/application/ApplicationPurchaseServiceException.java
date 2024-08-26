@@ -1,8 +1,8 @@
 package ai.shreds.application;
 
-import ai.shreds.shared.AdapterPurchaseResponseDTO;
-import ai.shreds.shared.AdapterSharedErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import ai.shreds.adapter.AdapterPurchaseResponseDTO;
+import ai.shreds.adapter.dto.AdapterSharedErrorResponse;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,7 +22,6 @@ public class ApplicationPurchaseServiceException {
         log.error("An internal server error occurred while processing the purchase transaction: {}", e.getMessage(), e);
         AdapterSharedErrorResponse errorResponse = new AdapterSharedErrorResponse();
         errorResponse.setStatus_code(500);
-        errorResponse.setData(null);
         errorResponse.setError("Internal server error: " + e.getMessage());
 
         AdapterPurchaseResponseDTO response = new AdapterPurchaseResponseDTO();

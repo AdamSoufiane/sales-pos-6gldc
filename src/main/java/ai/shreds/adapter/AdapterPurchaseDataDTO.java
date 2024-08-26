@@ -1,6 +1,6 @@
 package ai.shreds.adapter;
 
-import ai.shreds.shared.AdapterProductDTO;
+import ai.shreds.adapter.dto.AdapterProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

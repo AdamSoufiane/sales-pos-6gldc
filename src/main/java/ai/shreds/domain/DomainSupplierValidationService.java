@@ -3,13 +3,14 @@ package ai.shreds.domain;
 import ai.shreds.infrastructure.InfrastructureSupplierServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
-@Slf4j
 @Service
 public class DomainSupplierValidationService implements DomainSupplierValidationPort {
 
+    private static final Logger log = LoggerFactory.getLogger(DomainSupplierValidationService.class);
     private final InfrastructureSupplierServiceClient supplierServiceClient;
 
     @Autowired

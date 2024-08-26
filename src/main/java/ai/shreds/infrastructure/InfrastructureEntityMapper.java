@@ -14,18 +14,18 @@ public class InfrastructureEntityMapper {
     private static final Logger logger = LoggerFactory.getLogger(InfrastructureEntityMapper.class);
 
     /**
-     * Maps a DomainPurchaseTransactionEntity to an InfrastructurePurchaseTransactionRepositoryImpl.
+     * Maps a DomainPurchaseTransactionEntity to an InfrastructurePurchaseTransactionEntity.
      * @param domainEntity the domain entity to be mapped
      * @return the mapped infrastructure entity
      */
-    public InfrastructurePurchaseTransactionRepositoryImpl mapDomainToInfrastructure(DomainPurchaseTransactionEntity domainEntity) {
+    public InfrastructurePurchaseTransactionEntity mapDomainToInfrastructure(DomainPurchaseTransactionEntity domainEntity) {
         if (domainEntity == null) {
             throw new IllegalArgumentException("Domain entity cannot be null");
         }
-        logger.debug("Mapping DomainPurchaseTransactionEntity to InfrastructurePurchaseTransactionRepositoryImpl");
-        InfrastructurePurchaseTransactionRepositoryImpl infraEntity = new InfrastructurePurchaseTransactionRepositoryImpl();
+        logger.debug("Mapping DomainPurchaseTransactionEntity to InfrastructurePurchaseTransactionEntity");
+        InfrastructurePurchaseTransactionEntity infraEntity = new InfrastructurePurchaseTransactionEntity();
         infraEntity.setPurchaseNumber(domainEntity.getPurchaseNumber());
-        infraEntity.setPurchaseDate(domainEntity.getPurchaseDate());
+        infraEntity.setPurchaseDate(domainEntity.getPurchaseDate().toString()); // Assuming conversion to String
         infraEntity.setSupplierId(domainEntity.getSupplierId());
         if (domainEntity.getProducts() != null) {
             infraEntity.setProducts(domainEntity.getProducts().stream()
@@ -46,14 +46,14 @@ public class InfrastructureEntityMapper {
         }
         logger.debug("Mapping DomainProductEntity to InfrastructureProduct");
         InfrastructureProduct infraProduct = new InfrastructureProduct();
-        infraProduct.setProductId(domainProduct.getId());
+        infraProduct.setProductId(domainProduct.getProductId());
         infraProduct.setPurchasePrice(domainProduct.getPurchasePrice());
         infraProduct.setQuantity(domainProduct.getQuantity());
         return infraProduct;
     }
 }
 
-class InfrastructurePurchaseTransactionRepositoryImpl {
+class InfrastructurePurchaseTransactionEntity {
     private String purchaseNumber;
     private String purchaseDate;
     private String supplierId;

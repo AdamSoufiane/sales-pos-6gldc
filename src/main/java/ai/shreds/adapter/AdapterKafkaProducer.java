@@ -3,7 +3,7 @@ package ai.shreds.adapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import ai.shreds.shared.AdapterSharedErrorResponse;
+import ai.shreds.adapter.dto.AdapterSharedErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

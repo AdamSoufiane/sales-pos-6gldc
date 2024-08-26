@@ -1,7 +1,7 @@
 package ai.shreds.application;
 
-import ai.shreds.shared.AdapterPurchaseRequestDTO;
-import ai.shreds.shared.AdapterPurchaseResponseDTO;
+import ai.shreds.adapter.AdapterPurchaseResponseDTO;
+import ai.shreds.adapter.dto.AdapterPurchaseRequestDTO;
 
 /**
  * ApplicationPurchaseServiceInputPort defines the contract for processing purchase transactions.

@@ -9,6 +9,7 @@ import ai.shreds.domain.DomainSupplierValidationPort;
 import ai.shreds.domain.DomainProductValidationPort;
 import ai.shreds.domain.DomainPurchaseTransactionPort;
 import ai.shreds.domain.DomainPurchaseTransactionEntity;
+import ai.shreds.domain.DomainPurchaseTransactionException;
 import ai.shreds.infrastructure.InfrastructureEntityMapper;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +80,7 @@ public class ApplicationPurchaseService implements ApplicationPurchaseServiceInp
     private Future<SendResult<String, String>> sendKafkaMessageAsync(String topic, DomainPurchaseTransactionEntity transaction) {
         String message = transaction.toString();
         Message<String> msg = MessageBuilder.withPayload(message).build();
-        Future<SendResult<String, String>> future = kafkaProducer.sendMessage(topic, msg);
+        Future<SendResult<String, String>> future = kafkaProducer.sendMessage(topic, message);
         future.whenComplete((result, ex) -> {
             if (ex != null) {
                 handleKafkaException(ex);

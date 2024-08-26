@@ -1,7 +1,7 @@
 package ai.shreds.adapter;
 
-import ai.shreds.shared.AdapterPurchaseResponseDTO;
-import ai.shreds.shared.AdapterSharedErrorResponse;
+import ai.shreds.adapter.dto.AdapterPurchaseResponseDTO;
+import ai.shreds.adapter.dto.AdapterSharedErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +16,6 @@ public class AdapterPurchaseControllerException {
         log.error("Exception occurred: ", e);
         AdapterSharedErrorResponse errorResponse = new AdapterSharedErrorResponse();
         errorResponse.setStatus_code(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        errorResponse.setData(null);
         errorResponse.setError(e.getMessage());
         AdapterPurchaseResponseDTO response = new AdapterPurchaseResponseDTO();
         response.setStatus_code(errorResponse.getStatus_code());

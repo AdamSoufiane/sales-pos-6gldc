@@ -1,6 +1,6 @@
 package ai.shreds.adapter;
 
-import ai.shreds.shared.AdapterPurchaseDataDTO;
+import ai.shreds.adapter.AdapterPurchaseDataDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;

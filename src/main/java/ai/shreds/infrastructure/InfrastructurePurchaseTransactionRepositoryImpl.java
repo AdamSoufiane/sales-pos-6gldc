@@ -26,7 +26,7 @@ public class InfrastructurePurchaseTransactionRepositoryImpl implements DomainPu
     @Override
     public void savePurchaseTransaction(DomainPurchaseTransactionEntity transaction) {
         try {
-            PurchaseTransactionEntity jpaEntity = entityMapper.mapDomainToInfrastructure(transaction);
+            InfrastructurePurchaseTransactionEntity jpaEntity = entityMapper.mapDomainToInfrastructure(transaction);
             purchaseTransactionJpaRepository.save(jpaEntity);
             logger.info("Purchase transaction saved successfully: {}", transaction.getPurchaseNumber());
         } catch (Exception e) {

@@ -1,8 +1,5 @@
 package ai.shreds.domain;
 
-/**
- * Interface defining the contract for validating suppliers within the domain layer.
- */
 public interface DomainSupplierValidationPort {
     /**
      * Validates the existence of a supplier by its unique identifier.
