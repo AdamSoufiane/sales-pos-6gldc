@@ -33,7 +33,7 @@ public class AdapterSupplierController {
         SharedRequestParams sharedParams = new SharedRequestParams(params.getName(), params.getContact_info(), params.getAddress());
         List<SharedSupplierDTO> suppliers = getAllSuppliersInputPort.getAllSuppliers(sharedParams);
         List<AdapterSupplierResponseDTO> response = suppliers.stream()
-                .map(supplierMapper::toDTO)
+                .map(supplierMapper::toAdapterSupplierResponseDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
@@ -41,8 +41,8 @@ public class AdapterSupplierController {
     @GetMapping("/{id}")
     public ResponseEntity<AdapterSupplierResponseDTO> getSupplierById(@PathVariable Integer id) {
         try {
-            SharedSupplierDTO supplier = getSupplierByIdInputPort.getSupplierById(id);
-            AdapterSupplierResponseDTO response = supplierMapper.toDTO(supplier);
+            SharedSupplierDTO supplier = getSupplierByIdInputPort.getSupplierById(id.longValue());
+            AdapterSupplierResponseDTO response = supplierMapper.toAdapterSupplierResponseDTO(supplier);
             return ResponseEntity.ok(response);
         } catch (SupplierNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
-import ai.shreds.domain.SupplierNotFoundException;
 
 @Repository
 public class InfrastructureSupplierRepositoryImpl implements DomainSupplierRepositoryPort {
@@ -30,17 +29,8 @@ public class InfrastructureSupplierRepositoryImpl implements DomainSupplierRepos
     @Override
     public List<DomainSupplierEntity> findAll(SharedRequestParams params) {
         logger.info("Finding all suppliers with params: {}", params);
-        StringBuilder queryStr = new StringBuilder("SELECT s FROM DomainSupplierEntity s WHERE 1=1");
-        if (params.getName() != null && !params.getName().isEmpty()) {
-            queryStr.append(" AND s.name LIKE :name");
-        }
-        if (params.getContact_info() != null && !params.getContact_info().isEmpty()) {
-            queryStr.append(" AND s.contact_info LIKE :contact_info");
-        }
-        if (params.getAddress() != null && !params.getAddress().isEmpty()) {
-            queryStr.append(" AND s.address LIKE :address");
-        }
-        TypedQuery<DomainSupplierEntity> query = entityManager.createQuery(queryStr.toString(), DomainSupplierEntity.class);
+        String queryStr = buildQueryString(params);
+        TypedQuery<DomainSupplierEntity> query = entityManager.createQuery(queryStr, DomainSupplierEntity.class);
         if (params.getName() != null && !params.getName().isEmpty()) {
             query.setParameter("name", "%" + params.getName() + "%");
         }
@@ -56,6 +46,26 @@ public class InfrastructureSupplierRepositoryImpl implements DomainSupplierRepos
     }
 
     /**
+     * Constructs the query string based on the provided filtering criteria.
+     * 
+     * @param params The filtering criteria for retrieving suppliers.
+     * @return The constructed query string.
+     */
+    private String buildQueryString(SharedRequestParams params) {
+        StringBuilder queryStr = new StringBuilder("SELECT s FROM DomainSupplierEntity s WHERE 1=1");
+        if (params.getName() != null && !params.getName().isEmpty()) {
+            queryStr.append(" AND s.name LIKE :name");
+        }
+        if (params.getContact_info() != null && !params.getContact_info().isEmpty()) {
+            queryStr.append(" AND s.contact_info LIKE :contact_info");
+        }
+        if (params.getAddress() != null && !params.getAddress().isEmpty()) {
+            queryStr.append(" AND s.address LIKE :address");
+        }
+        return queryStr.toString();
+    }
+
+    /**
      * Finds a supplier by its unique ID.
      * 
      * @param id The unique identifier of the supplier.
@@ -67,5 +77,11 @@ public class InfrastructureSupplierRepositoryImpl implements DomainSupplierRepos
         logger.info("Finding supplier by ID: {}", id);
         return Optional.ofNullable(entityManager.find(DomainSupplierEntity.class, id))
                       .orElseThrow(() -> new SupplierNotFoundException("Supplier not found."));
+    }
+
+    private static class SupplierNotFoundException extends RuntimeException {
+        public SupplierNotFoundException(String message) {
+            super(message);
+        }
     }
 }

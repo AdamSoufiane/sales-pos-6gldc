@@ -29,11 +29,11 @@ public class ApplicationSupplierService implements ApplicationGetAllSuppliersInp
     }
 
     @Override
-    public SharedSupplierDTO getSupplierById(Long id) {
-        DomainSupplierEntity supplier = domainSupplierRepositoryPort.findById(id);
+    public SharedSupplierDTO getSupplierById(Integer id) {
+        DomainSupplierEntity supplier = domainSupplierRepositoryPort.findById(id.longValue());
         if (supplier == null) {
             throw new SupplierNotFoundException("Supplier not found.");
         }
-        return adapterSupplierMapper.toSharedSupplierDTO(supplier);
+        return adapterSupplierMapper.toDTO(supplier);
     }
 }
