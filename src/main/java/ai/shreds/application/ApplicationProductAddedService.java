@@ -2,6 +2,9 @@ package ai.shreds.application;
 
 import ai.shreds.adapter.AdapterProductAddedRequestParams;
 import ai.shreds.adapter.AdapterProductAddedResponseDTO;
+import ai.shreds.application.ApplicationProductAddedException;
+import ai.shreds.application.ApplicationProductAddedOutputPort;
+import ai.shreds.application.ApplicationProductAddedInputPort;
 import ai.shreds.domain.DomainProductAddedEvent;
 import ai.shreds.domain.DomainProductAddedEventPort;
 import ai.shreds.domain.DomainProductAddedEventResponse;
@@ -11,6 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +26,7 @@ public class ApplicationProductAddedService implements ApplicationProductAddedIn
     private static final Logger logger = LoggerFactory.getLogger(ApplicationProductAddedService.class);
     private final ApplicationProductAddedOutputPort outputPort;
     private final DomainProductAddedEventPort domainProductAddedEventPort;
+    private final ProductClient productClient;
 
     @Override
     @Transactional
@@ -51,6 +59,9 @@ public class ApplicationProductAddedService implements ApplicationProductAddedIn
         if (params.getProductId() == null || params.getProductId().isEmpty()) {
             throw new ApplicationProductAddedException("Invalid productId");
         }
+        if (!productClient.checkProductExists(params.getProductId())) {
+            throw new ApplicationProductAddedException("Product does not exist");
+        }
         if (params.getInitialQuantity() <= 0) {
             throw new ApplicationProductAddedException("Initial quantity must be positive");
         }
@@ -78,5 +89,11 @@ public class ApplicationProductAddedService implements ApplicationProductAddedIn
 
     private AdapterProductAddedResponseDTO handleException(Exception e) {
         return new AdapterProductAddedResponseDTO("Error: " + e.getMessage());
+    }
+
+    @FeignClient(name = "product-service")
+    public interface ProductClient {
+        @GetMapping("/product/{id}")
+        boolean checkProductExists(@PathVariable("id") String productId);
     }
 }
