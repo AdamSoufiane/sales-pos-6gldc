@@ -3,6 +3,7 @@ package ai.shreds.infrastructure;
 import ai.shreds.domain.DomainSupplierEntity;
 import ai.shreds.domain.DomainSupplierRepositoryPort;
 import ai.shreds.shared.SharedRequestParams;
+import ai.shreds.domain.SupplierNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
@@ -77,11 +78,5 @@ public class InfrastructureSupplierRepositoryImpl implements DomainSupplierRepos
         logger.info("Finding supplier by ID: {}", id);
         return Optional.ofNullable(entityManager.find(DomainSupplierEntity.class, id))
                       .orElseThrow(() -> new SupplierNotFoundException("Supplier not found."));
-    }
-
-    private static class SupplierNotFoundException extends RuntimeException {
-        public SupplierNotFoundException(String message) {
-            super(message);
-        }
     }
 }

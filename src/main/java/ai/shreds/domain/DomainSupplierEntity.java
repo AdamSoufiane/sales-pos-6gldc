@@ -1,5 +1,6 @@
 package ai.shreds.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.Size;
 
 @Data
+@Builder
 @Entity
 @Table(name = "Supplier")
 public class DomainSupplierEntity {

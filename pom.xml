@@ -80,11 +80,6 @@
                     <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.20</version>
-            </plugin>
         </plugins>
     </build>
 </project>
