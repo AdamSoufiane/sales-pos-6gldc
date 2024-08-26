@@ -28,6 +28,8 @@ public class DomainSupplierEntityMapper {
         dto.setName(entity.getName());
         dto.setContact_info(entity.getContact_info());
         dto.setAddress(entity.getAddress());
+        dto.setCompany_name(entity.getCompany_name());
+        dto.setDue_date(entity.getDue_date());
         dto.setCreated_at(entity.getCreated_at());
         dto.setUpdated_at(entity.getUpdated_at());
         return dto;
@@ -49,6 +51,8 @@ public class DomainSupplierEntityMapper {
         entity.setName(dto.getName());
         entity.setContact_info(dto.getContact_info());
         entity.setAddress(dto.getAddress());
+        entity.setCompany_name(dto.getCompany_name());
+        entity.setDue_date(dto.getDue_date());
         entity.setCreated_at(dto.getCreated_at());
         entity.setUpdated_at(dto.getUpdated_at());
         return entity;

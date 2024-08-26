@@ -26,7 +26,7 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
     @Transactional
     public SharedSupplierDTO createSupplier(AdapterCreateSupplierRequest request) {
         validateCreateRequest(request);
-        SharedSupplierDTO sharedSupplierDTO = new SharedSupplierDTO(null, request.getName(), request.getContact_info(), request.getAddress(), null, null);
+        SharedSupplierDTO sharedSupplierDTO = new SharedSupplierDTO(null, request.getName(), request.getContact_info(), request.getAddress(), request.getCompany_name(), request.getDue_date(), null, null);
         DomainSupplierEntity supplierEntity = domainSupplierEntityMapper.toEntity(sharedSupplierDTO);
         domainSupplierRepositoryPort.save(supplierEntity);
         log.info("Supplier created with id: {}", supplierEntity.getId());
@@ -42,6 +42,8 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
             supplierEntity.setName(request.getName() != null ? request.getName() : supplierEntity.getName());
             supplierEntity.setContact_info(request.getContact_info() != null ? request.getContact_info() : supplierEntity.getContact_info());
             supplierEntity.setAddress(request.getAddress() != null ? request.getAddress() : supplierEntity.getAddress());
+            supplierEntity.setCompany_name(request.getCompany_name() != null ? request.getCompany_name() : supplierEntity.getCompany_name());
+            supplierEntity.setDue_date(request.getDue_date() != null ? request.getDue_date() : supplierEntity.getDue_date());
             domainSupplierRepositoryPort.save(supplierEntity);
             log.info("Supplier updated with id: {}", id);
             return domainSupplierEntityMapper.toDTO(supplierEntity);
@@ -84,6 +86,12 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
             if (!StringUtils.hasText(((AdapterCreateSupplierRequest) request).getAddress())) {
                 throw new IllegalArgumentException("Address is required");
             }
+            if (!StringUtils.hasText(((AdapterCreateSupplierRequest) request).getCompany_name())) {
+                throw new IllegalArgumentException("Company name is required");
+            }
+            if (((AdapterCreateSupplierRequest) request).getDue_date() == null) {
+                throw new IllegalArgumentException("Due date is required");
+            }
         } else {
             if (((AdapterUpdateSupplierRequest) request).getName() != null && ((AdapterUpdateSupplierRequest) request).getName().isEmpty()) {
                 throw new IllegalArgumentException("Supplier name is invalid");
@@ -93,6 +101,12 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
             }
             if (((AdapterUpdateSupplierRequest) request).getAddress() != null && ((AdapterUpdateSupplierRequest) request).getAddress().isEmpty()) {
                 throw new IllegalArgumentException("Address is invalid");
+            }
+            if (((AdapterUpdateSupplierRequest) request).getCompany_name() != null && ((AdapterUpdateSupplierRequest) request).getCompany_name().isEmpty()) {
+                throw new IllegalArgumentException("Company name is invalid");
+            }
+            if (((AdapterUpdateSupplierRequest) request).getDue_date() == null) {
+                throw new IllegalArgumentException("Due date is invalid");
             }
         }
     }

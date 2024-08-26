@@ -33,6 +33,16 @@ public class SharedSupplierDTO {
     private String address;
 
     /**
+     * Company name of the supplier.
+     */
+    private String company_name;
+
+    /**
+     * Due date for the supplier payment.
+     */
+    private LocalDateTime due_date;
+
+    /**
      * Timestamp when the supplier record was created.
      */
     private LocalDateTime created_at;

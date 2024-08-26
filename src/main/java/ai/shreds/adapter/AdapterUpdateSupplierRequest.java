@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 /**
  * Request object for updating a supplier.
@@ -30,4 +31,16 @@ public class AdapterUpdateSupplierRequest {
      */
     @NotBlank(message = "Address is mandatory")
     private String address;
+
+    /**
+     * Company name of the supplier.
+     */
+    @NotBlank(message = "Company name is mandatory")
+    private String company_name;
+
+    /**
+     * Due date for the supplier payment.
+     */
+    @NotBlank(message = "Due date is mandatory")
+    private LocalDateTime due_date;
 }

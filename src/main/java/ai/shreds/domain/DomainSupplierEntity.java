@@ -42,6 +42,13 @@ public class DomainSupplierEntity {
     @Column(nullable = false)
     private String address;
 
+    @Size(max = 255)
+    @Column(nullable = false)
+    private String company_name;
+
+    @Column(nullable = false)
+    private LocalDateTime due_date;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime created_at;
 
@@ -60,6 +67,6 @@ public class DomainSupplierEntity {
     }
 
     public SharedSupplierDTO toDTO() {
-        return new SharedSupplierDTO(id, name, contact_info, address, created_at, updated_at);
+        return new SharedSupplierDTO(id, name, contact_info, address, company_name, due_date, created_at, updated_at);
     }
 }
