@@ -79,8 +79,8 @@ public class AdapterSupplierController {
     public ResponseEntity<AdapterDeleteSupplierResponse> deleteSupplier(@PathVariable Long id) {
         log.info("Deleting supplier with id: {}", id);
         try {
-            AdapterDeleteSupplierResponse response = deleteSupplierService.deleteSupplier(id);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            deleteSupplierService.deleteSupplier(id);
+            return new ResponseEntity<>(new AdapterDeleteSupplierResponse(HttpStatus.OK.value(), null, null), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error deleting supplier: ", e);
             return new ResponseEntity<>(new AdapterDeleteSupplierResponse(HttpStatus.BAD_REQUEST.value(), null, e.getMessage()), HttpStatus.BAD_REQUEST);

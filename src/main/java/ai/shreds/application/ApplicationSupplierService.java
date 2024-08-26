@@ -2,7 +2,6 @@ package ai.shreds.application;
 
 import ai.shreds.adapter.AdapterCreateSupplierRequest;
 import ai.shreds.adapter.AdapterUpdateSupplierRequest;
-import ai.shreds.adapter.AdapterDeleteSupplierResponse;
 import ai.shreds.shared.SharedSupplierDTO;
 import ai.shreds.domain.DomainSupplierEntity;
 import ai.shreds.domain.DomainSupplierRepositoryPort;
@@ -54,17 +53,12 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
 
     @Override
     @Transactional
-    public AdapterDeleteSupplierResponse deleteSupplier(Long id) {
+    public void deleteSupplier(Long id) {
         if (!domainSupplierRepositoryPort.existsById(id)) {
             throw new SupplierNotFoundException("Supplier not found");
         }
         domainSupplierRepositoryPort.deleteById(id);
         log.info("Supplier deleted with id: {}", id);
-        AdapterDeleteSupplierResponse response = new AdapterDeleteSupplierResponse();
-        response.setStatus_code(200);
-        response.setData(null);
-        response.setError(null);
-        return response;
     }
 
     private void validateCreateRequest(AdapterCreateSupplierRequest request) {
@@ -109,11 +103,6 @@ public class ApplicationSupplierService implements ApplicationCreateSupplierInpu
                 throw new IllegalArgumentException("Due date is invalid");
             }
         }
-    }
-
-    @Override
-    public void handleDeleteSupplierException(Exception e) {
-        // Implementation
     }
 
     public static class SupplierNotFoundException extends RuntimeException {
