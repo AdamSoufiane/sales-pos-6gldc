@@ -1,11 +1,10 @@
 package ai.shreds.adapter;
 
+import ai.shreds.adapter.AdapterPurchaseRequestDTO;
+import ai.shreds.adapter.AdapterPurchaseResponseDTO;
+import ai.shreds.application.ApplicationPurchaseServiceInputPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import ai.shreds.adapter.dto.AdapterPurchaseRequestDTO;
-import ai.shreds.adapter.dto.AdapterPurchaseResponseDTO;
-import ai.shreds.application.ApplicationPurchaseServiceInputPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class AdapterPurchaseController {
         } catch (IllegalArgumentException e) {
             log.error("Bad request for purchaseNumber: {}: {}", request.getPurchaseNumber(), e.getMessage());
             AdapterPurchaseResponseDTO errorResponse = AdapterPurchaseResponseDTO.builder()
-                    .status_code(HttpStatus.BAD_REQUEST.value())
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
                     .data(null)
                     .error(e.getMessage())
                     .build();
@@ -40,7 +39,7 @@ public class AdapterPurchaseController {
         } catch (Exception e) {
             log.error("Internal server error for purchaseNumber: {}: {}", request.getPurchaseNumber(), e.getMessage());
             AdapterPurchaseResponseDTO errorResponse = AdapterPurchaseResponseDTO.builder()
-                    .status_code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                     .data(null)
                     .error(e.getMessage())
                     .build();

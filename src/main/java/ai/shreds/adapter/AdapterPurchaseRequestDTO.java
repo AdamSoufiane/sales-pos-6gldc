@@ -1,9 +1,10 @@
-package ai.shreds.adapter.dto;
+package ai.shreds.adapter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
+import ai.shreds.adapter.AdapterProductDTO; // Ensure the AdapterProductDTO class is correctly imported and accessible.
 
 /**
  * Data Transfer Object for Purchase Request.

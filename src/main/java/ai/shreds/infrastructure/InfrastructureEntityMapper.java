@@ -2,6 +2,9 @@ package ai.shreds.infrastructure;
 
 import ai.shreds.domain.DomainProductEntity;
 import ai.shreds.domain.DomainPurchaseTransactionEntity;
+import ai.shreds.adapter.AdapterPurchaseRequestDTO;
+import ai.shreds.adapter.AdapterProductDTO;
+import ai.shreds.adapter.AdapterPurchaseDataDTO;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +17,7 @@ public class InfrastructureEntityMapper {
     private static final Logger logger = LoggerFactory.getLogger(InfrastructureEntityMapper.class);
 
     /**
-     * Maps a DomainPurchaseTransactionEntity to an InfrastructurePurchaseTransactionEntity.
+     * Maps a DomainPurchaseTransactionEntity to an InfrastructurePurchaseTransactionRepositoryImpl.
      * @param domainEntity the domain entity to be mapped
      * @return the mapped infrastructure entity
      */
@@ -46,50 +49,76 @@ public class InfrastructureEntityMapper {
         }
         logger.debug("Mapping DomainProductEntity to InfrastructureProduct");
         InfrastructureProduct infraProduct = new InfrastructureProduct();
-        infraProduct.setProductId(domainProduct.getProductId());
+        infraProduct.setProductId(domainProduct.getId());
         infraProduct.setPurchasePrice(domainProduct.getPurchasePrice());
         infraProduct.setQuantity(domainProduct.getQuantity());
         return infraProduct;
     }
-}
 
-class InfrastructurePurchaseTransactionEntity {
-    private String purchaseNumber;
-    private String purchaseDate;
-    private String supplierId;
-    private List<InfrastructureProduct> products;
-
-    public void setPurchaseNumber(String purchaseNumber) {
-        this.purchaseNumber = purchaseNumber;
+    /**
+     * Maps an AdapterPurchaseRequestDTO to a DomainPurchaseTransactionEntity.
+     * @param request the adapter request DTO to be mapped
+     * @return the mapped domain entity
+     */
+    public DomainPurchaseTransactionEntity mapAdapterToDomain(AdapterPurchaseRequestDTO request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Request DTO cannot be null");
+        }
+        DomainPurchaseTransactionEntity domainEntity = new DomainPurchaseTransactionEntity();
+        domainEntity.setPurchaseNumber(request.getPurchaseNumber());
+        domainEntity.setPurchaseDate(request.getPurchaseDate());
+        domainEntity.setSupplierId(request.getSupplierId());
+        domainEntity.setProducts(request.getProducts().stream().map(this::mapAdapterProductToDomain).collect(Collectors.toList()));
+        return domainEntity;
     }
 
-    public void setPurchaseDate(String purchaseDate) {
-        this.purchaseDate = purchaseDate;
+    /**
+     * Maps an AdapterProductDTO to a DomainProductEntity.
+     * @param productDTO the adapter product DTO to be mapped
+     * @return the mapped domain product entity
+     */
+    private DomainProductEntity mapAdapterProductToDomain(AdapterProductDTO productDTO) {
+        if (productDTO == null) {
+            throw new IllegalArgumentException("Product DTO cannot be null");
+        }
+        DomainProductEntity domainProduct = new DomainProductEntity();
+        domainProduct.setId(productDTO.getProductId());
+        domainProduct.setPurchasePrice(productDTO.getPurchasePrice());
+        domainProduct.setQuantity(productDTO.getQuantity());
+        return domainProduct;
     }
 
-    public void setSupplierId(String supplierId) {
-        this.supplierId = supplierId;
+    /**
+     * Maps a DomainPurchaseTransactionEntity to an AdapterPurchaseDataDTO.
+     * @param domainEntity the domain entity to be mapped
+     * @return the mapped adapter data DTO
+     */
+    public AdapterPurchaseDataDTO mapDomainToAdapter(DomainPurchaseTransactionEntity domainEntity) {
+        if (domainEntity == null) {
+            throw new IllegalArgumentException("Domain entity cannot be null");
+        }
+        AdapterPurchaseDataDTO adapterData = new AdapterPurchaseDataDTO();
+        adapterData.setPurchaseId(domainEntity.getPurchaseNumber());
+        adapterData.setPurchaseNumber(domainEntity.getPurchaseNumber());
+        adapterData.setPurchaseDate(domainEntity.getPurchaseDate().toString());
+        adapterData.setSupplierId(domainEntity.getSupplierId());
+        adapterData.setProducts(domainEntity.getProducts().stream().map(this::mapDomainProductToAdapter).collect(Collectors.toList()));
+        return adapterData;
     }
 
-    public void setProducts(List<InfrastructureProduct> products) {
-        this.products = products;
-    }
-}
-
-class InfrastructureProduct {
-    private String productId;
-    private double purchasePrice;
-    private int quantity;
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public void setPurchasePrice(double purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    /**
+     * Maps a DomainProductEntity to an AdapterProductDTO.
+     * @param domainProduct the domain product to be mapped
+     * @return the mapped adapter product DTO
+     */
+    private AdapterProductDTO mapDomainProductToAdapter(DomainProductEntity domainProduct) {
+        if (domainProduct == null) {
+            throw new IllegalArgumentException("Domain product cannot be null");
+        }
+        AdapterProductDTO adapterProduct = new AdapterProductDTO();
+        adapterProduct.setProductId(domainProduct.getId());
+        adapterProduct.setPurchasePrice(domainProduct.getPurchasePrice());
+        adapterProduct.setQuantity(domainProduct.getQuantity());
+        return adapterProduct;
     }
 }

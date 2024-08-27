@@ -2,7 +2,7 @@ package ai.shreds.infrastructure;
 
 import ai.shreds.domain.DomainPurchaseTransactionEntity;
 import ai.shreds.domain.DomainPurchaseTransactionPort;
-import ai.shreds.infrastructure.mapper.InfrastructureEntityMapper;
+import ai.shreds.infrastructure.InfrastructureEntityMapper;
 import ai.shreds.infrastructure.repository.PurchaseTransactionJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class InfrastructurePurchaseTransactionRepositoryImpl implements DomainPu
     @Override
     public void savePurchaseTransaction(DomainPurchaseTransactionEntity transaction) {
         try {
-            InfrastructurePurchaseTransactionEntity jpaEntity = entityMapper.mapDomainToInfrastructure(transaction);
+            PurchaseTransactionEntity jpaEntity = entityMapper.mapDomainToInfrastructure(transaction);
             purchaseTransactionJpaRepository.save(jpaEntity);
             logger.info("Purchase transaction saved successfully: {}", transaction.getPurchaseNumber());
         } catch (Exception e) {

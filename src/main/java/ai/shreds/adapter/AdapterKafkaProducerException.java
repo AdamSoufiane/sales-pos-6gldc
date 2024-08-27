@@ -1,26 +1,29 @@
-package ai.shreds.adapter.dto;
+package ai.shreds.adapter;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.KafkaException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.stereotype.Service;
 
-/**
- * Data Transfer Object (DTO) for encapsulating error responses in the adapter layer.
- */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class AdapterSharedErrorResponse {
+@Service
+public class AdapterKafkaProducerException {
+    private static final Logger logger = LoggerFactory.getLogger(AdapterKafkaProducerException.class);
+
     /**
-     * HTTP status code of the response.
+     * Handles exceptions that occur during Kafka message production.
+     * Logs the exception details and performs necessary error handling.
+     * @param e the exception to handle
      */
-    private int status_code;
-    /**
-     * Data field, always null for error responses.
-     */
-    private final Object data = null;
-    /**
-     * Error message detailing what went wrong.
-     */
-    private String error;
+    @Retryable(value = KafkaException.class, maxAttempts = 3, backoff = @Backoff(delay = 2000))
+    public void handleKafkaException(Exception e) {
+        if (e instanceof KafkaException) {
+            logger.error("KafkaException occurred: {}", e.getMessage(), e);
+            // Additional handling for Kafka-specific exceptions can be added here
+        } else {
+            logger.error("An unexpected exception occurred: {}", e.getMessage(), e);
+        }
+        // Potentially add more error handling logic here, such as sending alerts or retrying the operation
+    }
 }

@@ -1,10 +1,10 @@
 package ai.shreds.application;
 
 import ai.shreds.adapter.AdapterKafkaProducer;
-import ai.shreds.adapter.dto.AdapterPurchaseDataDTO;
-import ai.shreds.adapter.dto.AdapterPurchaseRequestDTO;
-import ai.shreds.adapter.dto.AdapterPurchaseResponseDTO;
-import ai.shreds.adapter.dto.AdapterProductDTO;
+import ai.shreds.adapter.AdapterPurchaseDataDTO;
+import ai.shreds.adapter.AdapterPurchaseRequestDTO;
+import ai.shreds.adapter.AdapterPurchaseResponseDTO;
+import ai.shreds.adapter.AdapterProductDTO;
 import ai.shreds.domain.DomainSupplierValidationPort;
 import ai.shreds.domain.DomainProductValidationPort;
 import ai.shreds.domain.DomainPurchaseTransactionPort;

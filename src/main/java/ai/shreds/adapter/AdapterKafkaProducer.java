@@ -5,6 +5,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import ai.shreds.adapter.dto.AdapterSharedErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.Future;
+import org.springframework.kafka.support.SendResult;
 
 @Service
 @Slf4j
@@ -17,10 +19,11 @@ public class AdapterKafkaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(String topic, String message) {
+    public Future<SendResult<String, String>> sendMessage(String topic, String message) {
         try {
-            kafkaTemplate.send(topic, message);
+            Future<SendResult<String, String>> future = kafkaTemplate.send(topic, message);
             log.info("Message sent to topic {}: {}", topic, message);
+            return future;
         } catch (Exception e) {
             AdapterSharedErrorResponse response = handleKafkaException(e);
             // Further handling of the response if necessary
